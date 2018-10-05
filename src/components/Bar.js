@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-const destStyle = {
+export const destStyle = {
   float: 'left',
   display: 'inline-block',
   paddingLeft: '10px',
@@ -14,17 +14,18 @@ const destStyle = {
   textAlign: 'center'
 }
 
-const Bar = ({ destinations }) =>
+const Bar = ({ destinations, onClickDestination }) =>
   <div style={{ height: '200px', width: '100%' }}>
     {destinations.map(dest =>
-      <div key={dest.name} style={destStyle}>
+      <div key={dest.name} style={destStyle} onClick={() => onClickDestination(dest)}>
         <h1>{dest.name}</h1>
         <h2>{dest.duration}</h2>
       </div>)}
   </div>
 
 Bar.propTypes = {
-  destinations: PropTypes.any
+  destinations: PropTypes.any,
+  onClickDestination: PropTypes.func
 }
 
 export default Bar
