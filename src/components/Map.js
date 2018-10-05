@@ -1,42 +1,46 @@
-import React, { Component } from 'react';
-import GoogleMapReact from 'google-map-react';
+import React from 'react'
+import PropTypes from 'prop-types'
+import GoogleMapReact from 'google-map-react'
 
-const AnyReactComponent = ({ text }) =>
-  <div>
-    <h1>
-      {text}
-    </h1>
-  </div>
-
-const somewhereAroundCapetown = {
-  lat: -33.55,
-  lng: 18.25
-};
-
-class SimpleMap extends Component {
-  static defaultProps = {
-    center: somewhereAroundCapetown,
-    zoom: 11
-  };
-
-  render() {
-    return (
-      // Important! Always set the container height explicitly
-      <div style={{ height: '100vh', width: '100%' }}>
-        <GoogleMapReact
-          bootstrapURLKeys={{ key: 'AIzaSyCTKcRP25mN9r3L-KaeysDE62uMneEaY9U' }}
-          defaultCenter={this.props.center}
-          defaultZoom={this.props.zoom}
-        >
-          <AnyReactComponent
-            lat={somewhereAroundCapetown.lat}
-            lng={somewhereAroundCapetown.lng}
-            text={'Africa! Wakawaka!'}
-          />
-        </GoogleMapReact>
-      </div>
-    );
-  }
+const greatPlaceStyle = {
+  position: 'absolute',
+  transform: 'translate(-50%, -50%)'
 }
 
-export default SimpleMap;
+const radius = 50
+const DestMarker = ({ text }) =>
+  <div style={greatPlaceStyle}>
+    <svg width={radius * 2} height={radius * 2}>
+      <circle cx={radius} cy={radius} r={radius} fill='red' fillOpacity='0.2' />
+    </svg>
+  </div>
+
+DestMarker.propTypes = {
+  text: PropTypes.string
+}
+
+const SimpleMap = ({ places, center }) => {
+  // Important! Always set the container height explicitly
+  return <div style={{ height: '100vh', width: '100%' }}>
+    <GoogleMapReact
+      bootstrapURLKeys={{ key: 'AIzaSyCTKcRP25mN9r3L-KaeysDE62uMneEaY9U' }}
+      defaultZoom={5}
+      center={center}
+    >
+      {places.map(place =>
+        <DestMarker
+          key={place.place_id}
+          lat={place.geometry.location.lat()}
+          lng={place.geometry.location.lng()}
+          text={'Africa! Wakawaka!'}
+        />)}
+    </GoogleMapReact>
+  </div>
+}
+
+SimpleMap.propTypes = {
+  center: PropTypes.any,
+  places: PropTypes.any
+}
+
+export default SimpleMap

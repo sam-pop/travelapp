@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 import '@material/fab/dist/mdc.fab.css';
 
-import Map from './components/Map';
+import MapContainer from './containers/MapContainer'
 import { Fab } from '@rmwc/fab';
 
 const fabStyle = {
@@ -11,15 +11,21 @@ const fabStyle = {
   right: '5em',
 }
 
+
+// db.getClient().then(db =>
+//   db.collection('trips').find({}, { limit: 100 }).asArray().then(docs => {
+//     console.log('Found docs', docs)
+//   }))
+
 class App extends Component {
-  render() {
+  render () {
     return (
       <div className="App">
-      <Map />
-      <Fab icon="+" className='fab' style={fabStyle} onClick={() => alert('click')}/>
+        <MapContainer />
+        <Fab icon="+" className='fab' style={fabStyle} onClick={() => alert('click')}/>
       </div>
-    );
+    )
   }
 }
 
-export default App;
+export default App
