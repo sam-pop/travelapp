@@ -1,24 +1,23 @@
-import React, { Component } from 'react';
-import './App.css';
-import db from './db.js';
-import Map from './components/Map';
+import React, { Component } from 'react'
+import './App.css'
+import db from './db.js'
+import Map from './components/Map'
 
+console.log('db', db)
 
-console.log('db', db);
-
-db.getClient().then(db => 
-  db.collection('trips').find({}, { limit: 100}).asArray().then(docs => {
-      console.log("Found docs", docs)}));
-
+db.getClient().then(db =>
+  db.collection('trips').find({}, { limit: 100 }).asArray().then(docs => {
+    console.log('Found docs', docs)
+  }))
 
 class App extends Component {
-  render() {
+  render () {
     return (
       <div className="App">
         <Map />
       </div>
-    );
+    )
   }
 }
 
-export default App;
+export default App
