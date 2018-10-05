@@ -1,20 +1,22 @@
 import React, { Component } from 'react';
 import './App.css';
-import {db} from './db.js'
+import '@material/fab/dist/mdc.fab.css';
+
 import Map from './components/Map';
-import {LocationSearchInput} from './components/LocationSearchInput';
+import { Fab } from '@rmwc/fab';
 
-
-db.collection('trips').find({}, { limit: 100}).asArray().then(docs => {
-      console.log("Found docs", docs)});
-
+const fabStyle = {
+  position: 'absolute',
+  bottom: '5em',
+  right: '5em',
+}
 
 class App extends Component {
   render() {
     return (
       <div className="App">
-        <LocationSearchInput />
-        <Map />
+      <Map />
+      <Fab icon="+" className='fab' style={fabStyle} onClick={() => alert('click')}/>
       </div>
     );
   }
