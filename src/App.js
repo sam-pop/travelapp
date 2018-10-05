@@ -2,8 +2,7 @@ import React, { Component } from 'react'
 import './App.css'
 import db from './db.js'
 import Map from './components/Map'
-
-console.log('db', db)
+import BarContainer from './containers/BarContainer'
 
 db.getClient().then(db =>
   db.collection('trips').find({}, { limit: 100 }).asArray().then(docs => {
@@ -14,6 +13,7 @@ class App extends Component {
   render () {
     return (
       <div className="App">
+        <BarContainer />
         <Map />
       </div>
     )
