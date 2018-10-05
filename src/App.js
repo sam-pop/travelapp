@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import './App.css'
 import db from './db.js'
-import Map from './components/Map'
+import MapContainer from './containers/MapContainer'
 
 console.log('db', db)
 
@@ -14,7 +14,7 @@ class App extends Component {
   render () {
     return (
       <div className="App">
-        <Map />
+        <MapContainer />
       </div>
     )
   }
