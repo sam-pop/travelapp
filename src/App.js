@@ -1,6 +1,11 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import {db} from './db.js'
+
+db.collection('trips').find({}, { limit: 100}).asArray().then(docs => {
+      console.log("Found docs", docs)});
+
 
 class App extends Component {
   render() {
