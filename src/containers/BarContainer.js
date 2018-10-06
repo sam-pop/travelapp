@@ -1,6 +1,9 @@
 import React from 'react'
 import Bar from '../components/Bar'
 import SingleDestinationBar from '../components/SingleDestinationBar'
+import ReactModal from 'react-modal'
+
+ReactModal.setAppElement(document.getElementById('root'))
 
 const fakeData = {
   destinations: [
@@ -37,25 +40,6 @@ const fakeData = {
   ]
 }
 
-const fakeNewDestination = {
-  name: 'Iceland',
-  duration: '6 days',
-  days: [
-    {
-      activities: [
-        { name: 'Ice' },
-        { name: 'More ice' }
-      ]
-    },
-    {
-      activities: [
-        { name: 'Seeing Ice' },
-        { name: 'Orca hunting' }
-      ]
-    }
-  ]
-}
-
 const fakeNewDay = {
   activities: [
     { name: 'farting' },
@@ -68,14 +52,15 @@ class BarContainer extends React.Component {
     super(props)
     this.state = {
       destination: null,
-      destinations: fakeData.destinations
+      destinations: fakeData.destinations,
+      modalDialogOpen: false
     }
   }
   onClickDestination (destination, destinationIndex) {
     this.setState({ destination, destinationIndex })
   }
   onClickAddDestination () {
-    this.setState({ destinations: [...this.state.destinations, fakeNewDestination] })
+    this.setState({ modalDialogOpen: true })
   }
   onClickBack () {
     this.setState({ destination: null })
@@ -95,11 +80,16 @@ class BarContainer extends React.Component {
           onClickBack={this.onClickBack.bind(this)}
           onClickAddDay={this.onClickAddDay.bind(this)}
         />
-        : <Bar
-          destinations={this.state.destinations}
-          onClickDestination={this.onClickDestination.bind(this)}
-          onClickAddDestination={this.onClickAddDestination.bind(this)}
-        />
+        : <div>
+          <Bar
+            destinations={this.state.destinations}
+            onClickDestination={this.onClickDestination.bind(this)}
+            onClickAddDestination={this.onClickAddDestination.bind(this)}
+          />
+          <ReactModal isOpen={this.state.modalDialogOpen} >
+            <h1 onClick={() => { this.setState({ modalDialogOpen: false }) }}>X</h1>
+          </ReactModal>
+        </div>
     )
   }
 }
