@@ -86,6 +86,7 @@ class BarContainer extends React.Component {
           {
             name: newPlace.address_components[0].long_name,
             duration: '1 day',
+            place_id: newPlace.place_id,
             days: []
           }
         ]
