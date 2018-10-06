@@ -1,5 +1,8 @@
-import React, { Component } from 'react';
-import './App.css';
+import React, { Component } from 'react'
+import './App.css'
+import db from './db.js'
+import BarContainer from './containers/BarContainer'
+
 import '@material/fab/dist/mdc.fab.css';
 
 import MapContainer from './containers/MapContainer'
@@ -21,6 +24,7 @@ class App extends Component {
   render () {
     return (
       <div className="App">
+        <BarContainer />
         <MapContainer />
         <Fab icon="+" className='fab' style={fabStyle} onClick={() => alert('click')}/>
       </div>
