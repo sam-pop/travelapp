@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import Map from '../components/Map'
 import { getClient, ObjectId } from '../db'
 
@@ -24,7 +25,8 @@ class MapContainer extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      places: []
+      places: [],
+      center: somewhereAroundCapetown
     }
   }
 
@@ -36,25 +38,37 @@ class MapContainer extends React.Component {
       trip => { console.log(trip); return trip[0].destinations.map(dest => dest.place_id) }).then(
       placeIds => Promise.all(placeIds.map(convertPlaceIdToLongLat))).then(
       places => {
-        console.log('got places info', places)
-        console.log('locations are: ', places.map(p => p.geometry.location.lat()))
         this.setState({ places })
       }
     )
+  }
+
+  componentWillReceiveProps (nextProps) {
+    if (nextProps.zoomToPlaceId) {
+      convertPlaceIdToLongLat(nextProps.zoomToPlaceId)
+        .then(place => {
+          this.setState({
+            center: {
+              lat: place.geometry.location.lat(),
+              lng: place.geometry.location.lng()
+            }
+          })
+        })
+    }
   }
 
   render () {
     return (
       <div>
         <Map places={this.state.places}
-          center={this.state.places.length === 0 ? somewhereAroundCapetown
-            : {
-              lat: this.state.places[0].geometry.location.lat(),
-              lng: this.state.places[0].geometry.location.lng()
-            }} />
+          center={this.state.center} />
       </div>
     )
   }
+}
+
+MapContainer.propTypes = {
+  zoomToPlaceId: PropTypes.string
 }
 
 export default MapContainer

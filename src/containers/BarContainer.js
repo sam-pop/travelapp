@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import Bar from '../components/Bar'
 import SingleDestinationBar from '../components/SingleDestinationBar'
 import ReactModal from 'react-modal'
@@ -10,6 +11,7 @@ const fakeData = {
   destinations: [
     {
       name: 'Paris',
+      place_id: 'ChIJD7fiBh9u5kcRYJSMaMOCCwQ',
       duration: '3 days',
       days: [
         {
@@ -22,6 +24,7 @@ const fakeData = {
     },
     {
       name: 'Seattle',
+      place_id: 'ChIJVTPokywQkFQRmtVEaUZlJRA',
       duration: '3 days',
       days: [
         {
@@ -58,6 +61,7 @@ class BarContainer extends React.Component {
     }
   }
   onClickDestination (destination, destinationIndex) {
+    this.props.onEnteringTripView(destination.place_id)
     this.setState({ destination, destinationIndex })
   }
   onClickAddDestination () {
@@ -91,7 +95,6 @@ class BarContainer extends React.Component {
             <h1 onClick={() => { this.setState({ modalDialogOpen: false }) }}>X</h1>
             <AddDestinationDialogBox onAdd={(newPlace) => {
               this.setState({ modalDialogOpen: false })
-              console.log('adding', newPlace)
               if (newPlace) {
                 this.setState({
                   destinations: [
@@ -99,6 +102,7 @@ class BarContainer extends React.Component {
                     {
                       name: newPlace.address_components[0].long_name,
                       duration: '1 day',
+                      place_id: newPlace.place_id,
                       days: []
                     }
                   ]
@@ -109,6 +113,10 @@ class BarContainer extends React.Component {
         </div>
     )
   }
+}
+
+BarContainer.propTypes = {
+  onEnteringTripView: PropTypes.func
 }
 
 export default BarContainer

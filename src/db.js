@@ -20,8 +20,6 @@ getClient().then(db =>
     db.collection('trips').find({ owner_id: client.auth.user.id }, { limit: 100 }).asArray()
   ])
 ).then(([nothing, docs]) => {
-  console.log('Found docs', docs)
-  console.log('[MongoDB Stitch] Connected to Stitch')
 }).catch(err => {
   console.error(err)
 })
