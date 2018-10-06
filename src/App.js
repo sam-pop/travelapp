@@ -1,20 +1,32 @@
 import React, { Component } from 'react'
 import './App.css'
 import db from './db.js'
-import Map from './components/Map'
 import BarContainer from './containers/BarContainer'
 
-db.getClient().then(db =>
-  db.collection('trips').find({}, { limit: 100 }).asArray().then(docs => {
-    console.log('Found docs', docs)
-  }))
+import '@material/fab/dist/mdc.fab.css';
+
+import MapContainer from './containers/MapContainer'
+import { Fab } from '@rmwc/fab';
+
+const fabStyle = {
+  position: 'absolute',
+  bottom: '5em',
+  right: '5em',
+}
+
+
+// db.getClient().then(db =>
+//   db.collection('trips').find({}, { limit: 100 }).asArray().then(docs => {
+//     console.log('Found docs', docs)
+//   }))
 
 class App extends Component {
   render () {
     return (
       <div className="App">
         <BarContainer />
-        <Map />
+        <MapContainer />
+        <Fab icon="+" className='fab' style={fabStyle} onClick={() => alert('click')}/>
       </div>
     )
   }

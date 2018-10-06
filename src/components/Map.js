@@ -2,36 +2,45 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import GoogleMapReact from 'google-map-react'
 
-const AnyReactComponent = ({ text }) =>
-  <div>
-    <h1>
-      {text}
-    </h1>
+const greatPlaceStyle = {
+  position: 'absolute',
+  transform: 'translate(-50%, -50%)'
+}
+
+const radius = 50
+const DestMarker = ({ text }) =>
+  <div style={greatPlaceStyle}>
+    <svg width={radius * 2} height={radius * 2}>
+      <circle cx={radius} cy={radius} r={radius} fill='red' fillOpacity='0.2' />
+    </svg>
   </div>
 
-AnyReactComponent.propTypes = {
+DestMarker.propTypes = {
   text: PropTypes.string
 }
 
-const somewhereAroundCapetown = {
-  lat: -33.55,
-  lng: 18.25
-}
-
-const SimpleMap = () =>
+const SimpleMap = ({ places, center }) => {
   // Important! Always set the container height explicitly
-  <div style={{ height: '100vh', width: '100%' }}>
+  return <div style={{ height: '100vh', width: '100%' }}>
     <GoogleMapReact
       bootstrapURLKeys={{ key: 'AIzaSyCTKcRP25mN9r3L-KaeysDE62uMneEaY9U' }}
-      defaultCenter={somewhereAroundCapetown}
-      defaultZoom={11}
+      defaultZoom={5}
+      center={center}
     >
-      <AnyReactComponent
-        lat={somewhereAroundCapetown.lat}
-        lng={somewhereAroundCapetown.lng}
-        text={'Africa! Wakawaka!'}
-      />
+      {places.map(place =>
+        <DestMarker
+          key={place.place_id}
+          lat={place.geometry.location.lat()}
+          lng={place.geometry.location.lng()}
+          text={'Africa! Wakawaka!'}
+        />)}
     </GoogleMapReact>
   </div>
+}
+
+SimpleMap.propTypes = {
+  center: PropTypes.any,
+  places: PropTypes.any
+}
 
 export default SimpleMap
