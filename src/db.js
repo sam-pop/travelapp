@@ -13,7 +13,6 @@ const getClient = () => client.auth.loginWithCredential(new AnonymousCredential(
 
 getClient().then(db =>
   Promise.all([
-    db.collection('trips').updateOne({ owner_id: client.auth.user.id }, { $set: { number: 42 } }, { upsert: true }),
     db.collection('trips').find({ owner_id: client.auth.user.id }, { limit: 100 }).asArray()
   ])
 ).then(([nothing, docs]) => {
