@@ -76,6 +76,22 @@ class BarContainer extends React.Component {
     newDestinations[destinationIndex].days.push(fakeNewDay)
     this.setState({ destinations: newDestinations })
   }
+  saveDestination (newPlace) {
+    this.setState({ modalDialogOpen: false })
+    console.log('adding', newPlace)
+    if (newPlace) {
+      this.setState({
+        destinations: [
+          ...this.state.destinations,
+          {
+            name: newPlace.address_components[0].long_name,
+            duration: '1 day',
+            days: []
+          }
+        ]
+      })
+    }
+  }
   render () {
     return (
       this.state.destination
@@ -93,22 +109,7 @@ class BarContainer extends React.Component {
           />
           <ReactModal isOpen={this.state.modalDialogOpen} >
             <h1 onClick={() => { this.setState({ modalDialogOpen: false }) }}>X</h1>
-            <AddDestinationDialogBox onAdd={(newPlace) => {
-              this.setState({ modalDialogOpen: false })
-              if (newPlace) {
-                this.setState({
-                  destinations: [
-                    ...this.state.destinations,
-                    {
-                      name: newPlace.address_components[0].long_name,
-                      duration: '1 day',
-                      place_id: newPlace.place_id,
-                      days: []
-                    }
-                  ]
-                })
-              }
-            }} />
+            <AddDestinationDialogBox onAdd={this.saveDestination.bind(this)} />
           </ReactModal>
         </div>
     )
