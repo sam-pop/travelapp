@@ -9,7 +9,7 @@ const AddButton = ({ onClickAddDay }) =>
   </div>
 
 AddButton.propTypes = {
-  onClickAddDay: PropTypes.fun
+  onClickAddDay: PropTypes.func
 }
 
 const SingleDestinationBar = ({ destination, destinationIndex, onClickBack, onClickAddDay }) =>
@@ -36,7 +36,7 @@ SingleDestinationBar.propTypes = {
   destination: PropTypes.any,
   destinationIndex: PropTypes.number.isRequired,
   onClickBack: PropTypes.func,
-  onClickAddDay: PropTypes.func
+  onClickAddDay: PropTypes.func.isRequired
 }
 
 export default SingleDestinationBar

@@ -6,7 +6,7 @@ import PlacesAutocomplete, {
 class LocationSearchInput extends React.Component {
   constructor (props) {
     super(props)
-    this.state = { address: '' }
+    this.state = { address: '', placeInfo: null }
   }
 
   handleChange (address) {
@@ -15,7 +15,12 @@ class LocationSearchInput extends React.Component {
 
   handleSelect (address) {
     geocodeByAddress(address)
-      .then(results => console.log(results))
+      .then(results => { 
+        if (results.length === 1) {
+          console.log(results)
+          this.setState({ placeInfo: results[0] })
+        }
+      })
       .catch(error => console.error('Error', error))
   }
 
@@ -23,11 +28,12 @@ class LocationSearchInput extends React.Component {
     return (
       <PlacesAutocomplete
         value={this.state.address}
-        onChange={this.handleChange}
-        onSelect={this.handleSelect}
+        onChange={this.handleChange.bind(this)}
+        onSelect={this.handleSelect.bind(this)}
       >
         {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
           <div>
+            <h2>{this.state.placeInfo && this.state.placeInfo.address_components[0].long_name}</h2>
             <input
               {...getInputProps({
                 placeholder: 'Search Places ...',
@@ -36,7 +42,7 @@ class LocationSearchInput extends React.Component {
             />
             <div className="autocomplete-dropdown-container">
               {loading && <div>Loading...</div>}
-              {suggestions.map(suggestion => {
+              {suggestions.map((suggestion, index) => {
                 const className = suggestion.active
                   ? 'suggestion-item--active'
                   : 'suggestion-item'
@@ -45,7 +51,7 @@ class LocationSearchInput extends React.Component {
                   ? { backgroundColor: '#fafafa', cursor: 'pointer' }
                   : { backgroundColor: '#ffffff', cursor: 'pointer' }
                 return (
-                  <div
+                  <div key={`suggestion-${index}`}
                     {...getSuggestionItemProps(suggestion, {
                       className,
                       style
@@ -55,6 +61,9 @@ class LocationSearchInput extends React.Component {
                   </div>
                 )
               })}
+            </div>
+            <div>
+              <h1 onClick={() => this.props.onSelect(this.state.placeInfo)} style={{ float: 'left' }}>Add</h1>
             </div>
           </div>
         )}
