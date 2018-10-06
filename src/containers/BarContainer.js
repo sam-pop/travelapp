@@ -56,6 +56,13 @@ const fakeNewDestination = {
   ]
 }
 
+const fakeNewDay = {
+  activities: [
+    { name: 'farting' },
+    { name: 'sunbathing' }
+  ]
+}
+
 class BarContainer extends React.Component {
   constructor (props) {
     super(props)
@@ -64,8 +71,8 @@ class BarContainer extends React.Component {
       destinations: fakeData.destinations
     }
   }
-  onClickDestination (destination) {
-    this.setState({ destination })
+  onClickDestination (destination, destinationIndex) {
+    this.setState({ destination, destinationIndex })
   }
   onClickAddDestination () {
     this.setState({ destinations: [...this.state.destinations, fakeNewDestination] })
@@ -74,12 +81,19 @@ class BarContainer extends React.Component {
     this.setState({ destination: null })
     return 6
   }
+  onClickAddDay (destinationIndex) {
+    const newDestinations = [...this.state.destinations]
+    newDestinations[destinationIndex].days.push(fakeNewDay)
+    this.setState({ destinations: newDestinations })
+  }
   render () {
     return (
       this.state.destination
         ? <SingleDestinationBar
           destination={this.state.destination}
+          destinationIndex={this.state.destinationIndex}
           onClickBack={this.onClickBack.bind(this)}
+          onClickAddDay={this.onClickAddDay.bind(this)}
         />
         : <Bar
           destinations={this.state.destinations}

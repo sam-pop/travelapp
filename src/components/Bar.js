@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import Button from './Button'
 
 export const destStyle = {
   float: 'left',
@@ -15,8 +16,8 @@ export const destStyle = {
 }
 
 const AddButton = ({ onClickAddDestination }) =>
-  <div style={{ width: '140px', float: 'left', display: 'inline-block' }}>
-    <h1 onClick={() => onClickAddDestination()}>Add</h1>
+  <div style={{ width: '140px', float: 'left', display: 'inline-block', paddingTop: '70px' }}>
+    <Button onClick={onClickAddDestination} />
   </div>
 
 AddButton.propTypes = {
@@ -26,7 +27,7 @@ AddButton.propTypes = {
 const Bar = ({ destinations, onClickDestination, onClickAddDestination }) =>
   <div style={{ height: '200px', width: '100%' }}>
     {destinations.map((dest, destIndex) =>
-      <div key={`${dest.name}-${destIndex}`} style={destStyle} onClick={() => onClickDestination(dest)}>
+      <div key={`${dest.name}-${destIndex}`} style={destStyle} onClick={() => onClickDestination(dest, destIndex)}>
         <h1>{dest.name}</h1>
         <h2>{dest.duration}</h2>
       </div>)}

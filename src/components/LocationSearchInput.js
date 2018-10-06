@@ -1,26 +1,25 @@
-import React from 'react';
+import React from 'react'
 import PlacesAutocomplete, {
-  geocodeByAddress,
-  getLatLng,
-} from 'react-places-autocomplete';
+  geocodeByAddress
+} from 'react-places-autocomplete'
 
 class LocationSearchInput extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { address: '' };
+  constructor (props) {
+    super(props)
+    this.state = { address: '' }
   }
 
-  handleChange = address => {
-    this.setState({ address });
-  };
+  handleChange (address) {
+    this.setState({ address })
+  }
 
-  handleSelect = address => {
+  handleSelect (address) {
     geocodeByAddress(address)
       .then(results => console.log(results))
-      .catch(error => console.error('Error', error));
-  };
+      .catch(error => console.error('Error', error))
+  }
 
-  render() {
+  render () {
     return (
       <PlacesAutocomplete
         value={this.state.address}
@@ -32,7 +31,7 @@ class LocationSearchInput extends React.Component {
             <input
               {...getInputProps({
                 placeholder: 'Search Places ...',
-                className: 'location-search-input',
+                className: 'location-search-input'
               })}
             />
             <div className="autocomplete-dropdown-container">
@@ -40,28 +39,28 @@ class LocationSearchInput extends React.Component {
               {suggestions.map(suggestion => {
                 const className = suggestion.active
                   ? 'suggestion-item--active'
-                  : 'suggestion-item';
+                  : 'suggestion-item'
                 // inline style for demonstration purpose
                 const style = suggestion.active
                   ? { backgroundColor: '#fafafa', cursor: 'pointer' }
-                  : { backgroundColor: '#ffffff', cursor: 'pointer' };
+                  : { backgroundColor: '#ffffff', cursor: 'pointer' }
                 return (
                   <div
                     {...getSuggestionItemProps(suggestion, {
                       className,
-                      style,
+                      style
                     })}
                   >
                     <span>{suggestion.description}</span>
                   </div>
-                );
+                )
               })}
             </div>
           </div>
         )}
       </PlacesAutocomplete>
-    );
+    )
   }
 }
 
-export { LocationSearchInput };
+export { LocationSearchInput }
