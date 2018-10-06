@@ -15,6 +15,7 @@
     "mongodb-stitch-browser-sdk": "^4.0.13",
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
+    "react-modal": "^3.6.1",
     "react-places-autocomplete": "^7.2.0",
     "react-scripts": "2.0.4",
     "rmwc": "^3.0.4",

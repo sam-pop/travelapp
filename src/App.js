@@ -1,17 +1,7 @@
 import React, { Component } from 'react'
 import './App.css'
 import BarContainer from './containers/BarContainer'
-
-import '@material/fab/dist/mdc.fab.css'
-
 import MapContainer from './containers/MapContainer'
-import { Fab } from '@rmwc/fab'
-
-const fabStyle = {
-  position: 'absolute',
-  bottom: '5em',
-  right: '5em'
-}
 
 class App extends Component {
   render () {
@@ -19,7 +9,6 @@ class App extends Component {
       <div className="App">
         <BarContainer />
         <MapContainer />
-        <Fab icon="+" className='fab' style={fabStyle} onClick={() => alert('click')}/>
       </div>
     )
   }
