@@ -4,11 +4,15 @@ import {
   AnonymousCredential
 } from 'mongodb-stitch-browser-sdk'
 
+import { ObjectId } from 'bson'
+
 const client = Stitch.initializeDefaultAppClient('travelapp-ewvje')
 
 const db = client.getServiceClient(RemoteMongoClient.factory, 'mongodb-atlas').db('dev')
 
-const getClient = () => client.auth.loginWithCredential(new AnonymousCredential())
+const anonymousCredential = new AnonymousCredential()
+
+const getClient = () => client.auth.loginWithCredential(anonymousCredential)
   .then(() => db)
 
 getClient().then(db =>
@@ -22,6 +26,4 @@ getClient().then(db =>
   console.error(err)
 })
 
-export default {
-  getClient
-}
+export { getClient, ObjectId }
