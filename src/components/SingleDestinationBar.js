@@ -10,7 +10,7 @@ const SingleDestinationBar = ({ destination, onClickBack }) =>
     </div>
     {destination.days.map((day, dayIndex) =>
       <div key={`day-${dayIndex}`} style={{ ...destStyle, height: '140px' }}>
-        <h2 style={{ margin: 0 }}>Day {dayIndex}</h2>
+        <h2 style={{ margin: 0 }}>Day {dayIndex + 1}</h2>
         <ul style={{ padding: 0, paddingLeft: '5px' }}>
           {day.activities.map((act, actIndex) =>
             <li key={`day-${day}-act-${actIndex}`} style={{ listStyleType: 'none' }}>
