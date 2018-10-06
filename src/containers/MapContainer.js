@@ -38,16 +38,13 @@ class MapContainer extends React.Component {
       trip => { console.log(trip); return trip[0].destinations.map(dest => dest.place_id) }).then(
       placeIds => Promise.all(placeIds.map(convertPlaceIdToLongLat))).then(
       places => {
-        console.log('got places info', places)
         this.setState({ places })
       }
     )
   }
 
   componentWillReceiveProps (nextProps) {
-    console.log('receiving', nextProps)
     if (nextProps.zoomToPlaceId) {
-      console.log(nextProps)
       convertPlaceIdToLongLat(nextProps.zoomToPlaceId)
         .then(place => {
           this.setState({

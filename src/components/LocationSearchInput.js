@@ -17,7 +17,6 @@ class LocationSearchInput extends React.Component {
     geocodeByAddress(address)
       .then(results => { 
         if (results.length === 1) {
-          console.log(results)
           this.setState({ placeInfo: results[0] })
         }
       })

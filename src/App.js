@@ -11,7 +11,6 @@ class App extends Component {
     }
   }
   zoomToPlaceId (placeId) {
-    console.log('zooming to ', placeId)
     this.setState({ zoomToPlaceId: placeId })
   }
   render () {
