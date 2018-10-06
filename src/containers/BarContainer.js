@@ -37,18 +37,42 @@ const fakeData = {
   ]
 }
 
+const fakeNewDestination = {
+  name: 'Iceland',
+  duration: '6 days',
+  days: [
+    {
+      activities: [
+        { name: 'Ice' },
+        { name: 'More ice' }
+      ]
+    },
+    {
+      activities: [
+        { name: 'Seeing Ice' },
+        { name: 'Orca hunting' }
+      ]
+    }
+  ]
+}
+
 class BarContainer extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      destination: null
+      destination: null,
+      destinations: fakeData.destinations
     }
   }
   onClickDestination (destination) {
     this.setState({ destination })
   }
+  onClickAddDestination () {
+    this.setState({ destinations: [...this.state.destinations, fakeNewDestination] })
+  }
   onClickBack () {
     this.setState({ destination: null })
+    return 6
   }
   render () {
     return (
@@ -58,8 +82,9 @@ class BarContainer extends React.Component {
           onClickBack={this.onClickBack.bind(this)}
         />
         : <Bar
-          destinations={fakeData.destinations}
+          destinations={this.state.destinations}
           onClickDestination={this.onClickDestination.bind(this)}
+          onClickAddDestination={this.onClickAddDestination.bind(this)}
         />
     )
   }
