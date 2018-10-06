@@ -2,6 +2,7 @@ import React from 'react'
 import Bar from '../components/Bar'
 import SingleDestinationBar from '../components/SingleDestinationBar'
 import ReactModal from 'react-modal'
+import AddDestinationDialogBox from '../components/AddDestinationDialogBox'
 
 ReactModal.setAppElement(document.getElementById('root'))
 
@@ -88,6 +89,22 @@ class BarContainer extends React.Component {
           />
           <ReactModal isOpen={this.state.modalDialogOpen} >
             <h1 onClick={() => { this.setState({ modalDialogOpen: false }) }}>X</h1>
+            <AddDestinationDialogBox onAdd={(newPlace) => {
+              this.setState({ modalDialogOpen: false })
+              console.log('adding', newPlace)
+              if (newPlace) {
+                this.setState({
+                  destinations: [
+                    ...this.state.destinations,
+                    {
+                      name: newPlace.address_components[0].long_name,
+                      duration: '1 day',
+                      days: []
+                    }
+                  ]
+                })
+              }
+            }} />
           </ReactModal>
         </div>
     )
