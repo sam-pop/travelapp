@@ -38,6 +38,7 @@ class TripViewContainer extends React.Component {
         <TripView
           {...this.props}
           onClickAddDestination={this.onClickAddDestination.bind(this)}
+          onTitleChange={this.props.onTitleChange}
         />
         <ReactModal isOpen={this.state.modalDialogOpen} >
           <h1 onClick={() => { this.setState({ modalDialogOpen: false }) }}>X</h1>
@@ -51,6 +52,7 @@ class TripViewContainer extends React.Component {
 TripViewContainer.propTypes = {
   destinations: PropTypes.any,
   onClickDestination: PropTypes.func.isRequired,
+  onTitleChange: PropTypes.func.isRequired,
   height: PropTypes.any,
   tripInfo: PropTypes.object
 }

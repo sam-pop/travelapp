@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Button from './Button'
+import EditableText from '../containers/EditableText'
 
 export const destStyle = {
   float: 'left',
@@ -26,10 +27,13 @@ AddButton.propTypes = {
 const formatDate = tripInfo =>
   `${tripInfo.tripStartDate.format('MMM Do')} - ${tripInfo.tripEndDate.format('MMM Do')}`
 
-const TripView = ({ destinations, onClickDestination, onClickAddDestination, height, tripInfo }) =>
+const TripView = ({ destinations, onClickDestination, onClickAddDestination, height, tripInfo, onTitleChange }) =>
   <div style={{ height, width: '100%' }}>
     <div style={{ height: 40, textAlign: 'left', paddingLeft: '30px', paddingTop: '10px' }}>
-      <span><h3 style={{display: 'inline'}}>{tripInfo.name}</h3></span>
+      <EditableText
+        value={tripInfo.name}
+        onChange={value => onTitleChange(value)}
+      />
       <h3 style={{ margin: 0, display: 'inline' }}>
         {`, ${tripInfo.numberOfDays} Days, ${formatDate(tripInfo)}`}
       </h3>
@@ -46,6 +50,7 @@ const TripView = ({ destinations, onClickDestination, onClickAddDestination, hei
 
 TripView.propTypes = {
   destinations: PropTypes.any,
+  onTitleChange: PropTypes.func.isRequired,
   onClickDestination: PropTypes.func.isRequired,
   onClickAddDestination: PropTypes.func.isRequired,
   height: PropTypes.any,

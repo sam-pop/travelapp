@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import SingleDestinationBar from '../components/SingleDestinationBar'
 import moment from 'moment'
-import TripViewContainer from './TripViewContainer';
+import TripViewContainer from './TripViewContainer'
 
 const fakeTripInfo = {
   name: 'Trip to China',
@@ -60,7 +60,8 @@ class BarContainer extends React.Component {
     super(props)
     this.state = {
       destination: null,
-      destinations: fakeData.destinations
+      destinations: fakeData.destinations,
+      tripInfo: fakeTripInfo
     }
   }
   onClickDestination (destination, destinationIndex) {
@@ -91,7 +92,8 @@ class BarContainer extends React.Component {
             height={this.props.height}
             destinations={this.state.destinations}
             onClickDestination={this.onClickDestination.bind(this)}
-            tripInfo={fakeTripInfo}
+            tripInfo={this.state.tripInfo}
+            onTitleChange={value => this.setState({ tripInfo: { ...this.state.tripInfo, name: value } })}
           />
         </div>
     )
