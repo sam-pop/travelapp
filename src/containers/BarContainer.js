@@ -1,11 +1,15 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import Bar from '../components/Bar'
 import SingleDestinationBar from '../components/SingleDestinationBar'
-import ReactModal from 'react-modal'
-import AddDestinationDialogBox from '../components/AddDestinationDialogBox'
+import moment from 'moment'
+import TripViewContainer from './TripViewContainer';
 
-ReactModal.setAppElement(document.getElementById('root'))
+const fakeTripInfo = {
+  name: 'Trip to China',
+  tripStartDate: moment(),
+  tripEndDate: moment().add(5, 'days'),
+  numberOfDays: 15
+}
 
 const fakeData = {
   destinations: [
@@ -56,16 +60,12 @@ class BarContainer extends React.Component {
     super(props)
     this.state = {
       destination: null,
-      destinations: fakeData.destinations,
-      modalDialogOpen: false
+      destinations: fakeData.destinations
     }
   }
   onClickDestination (destination, destinationIndex) {
     this.props.onEnteringTripView(destination.place_id)
     this.setState({ destination, destinationIndex })
-  }
-  onClickAddDestination () {
-    this.setState({ modalDialogOpen: true })
   }
   onClickBack () {
     this.setState({ destination: null })
@@ -87,31 +87,12 @@ class BarContainer extends React.Component {
           onClickAddDay={this.onClickAddDay.bind(this)}
         />
         : <div>
-          <Bar
+          <TripViewContainer
             height={this.props.height}
             destinations={this.state.destinations}
             onClickDestination={this.onClickDestination.bind(this)}
-            onClickAddDestination={this.onClickAddDestination.bind(this)}
+            tripInfo={fakeTripInfo}
           />
-          <ReactModal isOpen={this.state.modalDialogOpen} >
-            <h1 onClick={() => { this.setState({ modalDialogOpen: false }) }}>X</h1>
-            <AddDestinationDialogBox onAdd={(newPlace) => {
-              this.setState({ modalDialogOpen: false })
-              if (newPlace) {
-                this.setState({
-                  destinations: [
-                    ...this.state.destinations,
-                    {
-                      name: newPlace.address_components[0].long_name,
-                      duration: '1 day',
-                      place_id: newPlace.place_id,
-                      days: []
-                    }
-                  ]
-                })
-              }
-            }} />
-          </ReactModal>
         </div>
     )
   }

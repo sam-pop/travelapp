@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { destStyle } from './Bar'
+import { destStyle } from './TripView'
 import Button from './Button'
 
 const AddButton = ({ onClickAddDay }) =>
