@@ -12,8 +12,8 @@ AddButton.propTypes = {
   onClickAddDay: PropTypes.func
 }
 
-const SingleDestinationBar = ({ destination, destinationIndex, onClickBack, onClickAddDay }) =>
-  <div style={{ height: '200px', width: '100%' }}>
+const SingleDestinationBar = ({ destination, destinationIndex, onClickBack, onClickAddDay, height }) =>
+  <div style={{ height, width: '100%' }}>
     <h2 style={{ textAlign: 'left', marginLeft: '10px', marginBottom: '2px' }}>{destination.name}</h2>
     <div onClick={() => onClickBack()} style={{ height: '100%', padding: '30px', float: 'left' }}>
       Back
@@ -36,7 +36,8 @@ SingleDestinationBar.propTypes = {
   destination: PropTypes.any,
   destinationIndex: PropTypes.number.isRequired,
   onClickBack: PropTypes.func,
-  onClickAddDay: PropTypes.func.isRequired
+  onClickAddDay: PropTypes.func.isRequired,
+  height: PropTypes.any
 }
 
 export default SingleDestinationBar

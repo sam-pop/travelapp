@@ -3,6 +3,8 @@ import './App.css'
 import BarContainer from './containers/BarContainer'
 import MapContainer from './containers/MapContainer'
 
+const barContainerHeight = 200 // height in pixels
+
 class App extends Component {
   constructor (props) {
     super(props)
@@ -16,8 +18,14 @@ class App extends Component {
   render () {
     return (
       <div className="App">
-        <BarContainer onEnteringTripView={this.zoomToPlaceId.bind(this)} />
-        <MapContainer zoomToPlaceId={this.state.zoomToPlaceId} />
+        <BarContainer
+          onEnteringTripView={this.zoomToPlaceId.bind(this)}
+          height={barContainerHeight}
+        />
+        <MapContainer
+          zoomToPlaceId={this.state.zoomToPlaceId}
+          height={window.innerHeight - barContainerHeight}
+        />
       </div>
     )
   }
