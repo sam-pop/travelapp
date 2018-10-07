@@ -78,7 +78,6 @@ class BarContainer extends React.Component {
   }
   saveDestination (newPlace) {
     this.setState({ modalDialogOpen: false })
-    console.log('adding', newPlace)
     if (newPlace) {
       this.setState({
         destinations: [
