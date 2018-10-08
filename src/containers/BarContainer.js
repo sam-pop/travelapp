@@ -110,6 +110,7 @@ class BarContainer extends React.Component {
             onClickDestination={this.onClickDestination.bind(this)}
             tripInfo={this.state.tripInfo}
             onTitleChange={value => this.setState({ tripInfo: { ...this.state.tripInfo, name: value } })}
+            onDateChange={value => this.setState({ tripInfo: { ...this.state.tripInfo, ...value } })}
           />
         </div>
     )

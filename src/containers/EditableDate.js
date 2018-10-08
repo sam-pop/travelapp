@@ -1,12 +1,16 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import OutsideAlerter from './OutsideAlerter'
+import moment from 'moment'
 
-class EditableText extends React.Component {
+const titleDateFormat = 'MMM Do'
+const inputValueDateFormat = 'YYYY-MM-DD'
+
+class EditableDate extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      value: props.value || '',
+      value: props.value || moment(),
       editingMode: false
     }
   }
@@ -14,7 +18,7 @@ class EditableText extends React.Component {
     this.setState({ editingMode: true })
   }
   onChange (event) {
-    this.setState({ value: event.target.value })
+    this.setState({ value: moment(event.target.value) })
   }
   onDone () {
     this.props.onChange(this.state.value)
@@ -29,13 +33,13 @@ class EditableText extends React.Component {
       <span onClick={this.onClick.bind(this)}>
         <OutsideAlerter onClickOutside={this.onClickOutside.bind(this)}>
           {this.state.editingMode
-            ? <input type='text'
-              value={this.state.value}
+            ? <input type='date'
+              value={this.state.value.format(inputValueDateFormat)}
               onChange={this.onChange.bind(this)}
             >
             </input>
             : <h3 style={{ display: 'inline' }}>
-              {this.state.value}
+              {this.state.value.format(titleDateFormat)}
             </h3>
           }
         </OutsideAlerter>
@@ -44,9 +48,9 @@ class EditableText extends React.Component {
   }
 }
 
-EditableText.propTypes = {
-  value: PropTypes.string,
+EditableDate.propTypes = {
+  value: PropTypes.any,
   onChange: PropTypes.func
 }
 
-export default EditableText
+export default EditableDate
