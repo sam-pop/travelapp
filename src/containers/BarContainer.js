@@ -1,11 +1,15 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import Bar from '../components/Bar'
 import SingleDestinationBar from '../components/SingleDestinationBar'
-import ReactModal from 'react-modal'
-import AddDestinationDialogBox from '../components/AddDestinationDialogBox'
+import moment from 'moment'
+import TripViewContainer from './TripViewContainer'
 
-ReactModal.setAppElement(document.getElementById('root'))
+const fakeTripInfo = {
+  name: 'Trip to China',
+  tripStartDate: moment(),
+  tripEndDate: moment().add(5, 'days'),
+  numberOfDays: 15
+}
 
 const fakeData = {
   destinations: [
@@ -57,15 +61,12 @@ class BarContainer extends React.Component {
     this.state = {
       destination: null,
       destinations: fakeData.destinations,
-      modalDialogOpen: false
+      tripInfo: fakeTripInfo
     }
   }
   onClickDestination (destination, destinationIndex) {
     this.props.onEnteringTripView(destination.place_id)
     this.setState({ destination, destinationIndex })
-  }
-  onClickAddDestination () {
-    this.setState({ modalDialogOpen: true })
   }
   onClickBack () {
     this.setState({ destination: null })
@@ -103,16 +104,13 @@ class BarContainer extends React.Component {
           onClickAddDay={this.onClickAddDay.bind(this)}
         />
         : <div>
-          <Bar
+          <TripViewContainer
             height={this.props.height}
             destinations={this.state.destinations}
             onClickDestination={this.onClickDestination.bind(this)}
-            onClickAddDestination={this.onClickAddDestination.bind(this)}
+            tripInfo={this.state.tripInfo}
+            onTitleChange={value => this.setState({ tripInfo: { ...this.state.tripInfo, name: value } })}
           />
-          <ReactModal isOpen={this.state.modalDialogOpen} >
-            <h1 onClick={() => { this.setState({ modalDialogOpen: false }) }}>X</h1>
-            <AddDestinationDialogBox onAdd={this.saveDestination.bind(this)} />
-          </ReactModal>
         </div>
     )
   }
