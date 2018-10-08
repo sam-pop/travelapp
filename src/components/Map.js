@@ -19,9 +19,9 @@ DestMarker.propTypes = {
   text: PropTypes.string
 }
 
-const SimpleMap = ({ places, center }) => {
+const SimpleMap = ({ places, center, height }) => {
   // Important! Always set the container height explicitly
-  return <div style={{ height: '100vh', width: '100%' }}>
+  return <div style={{ height, width: '100%' }}>
     <GoogleMapReact
       bootstrapURLKeys={{ key: 'AIzaSyCTKcRP25mN9r3L-KaeysDE62uMneEaY9U' }}
       defaultZoom={5}
@@ -40,7 +40,8 @@ const SimpleMap = ({ places, center }) => {
 
 SimpleMap.propTypes = {
   center: PropTypes.any,
-  places: PropTypes.any
+  places: PropTypes.any,
+  height: PropTypes.any
 }
 
 export default SimpleMap

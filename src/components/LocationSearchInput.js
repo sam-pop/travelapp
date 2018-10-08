@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import PlacesAutocomplete, {
   geocodeByAddress
 } from 'react-places-autocomplete'
@@ -15,7 +16,7 @@ class LocationSearchInput extends React.Component {
 
   handleSelect (address) {
     geocodeByAddress(address)
-      .then(results => { 
+      .then(results => {
         if (results.length === 1) {
           this.setState({ placeInfo: results[0] })
         }
@@ -69,6 +70,10 @@ class LocationSearchInput extends React.Component {
       </PlacesAutocomplete>
     )
   }
+}
+
+LocationSearchInput.propTypes = {
+  onSelect: PropTypes.func.isRequired
 }
 
 export { LocationSearchInput }

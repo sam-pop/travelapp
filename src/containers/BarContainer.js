@@ -96,6 +96,7 @@ class BarContainer extends React.Component {
     return (
       this.state.destination
         ? <SingleDestinationBar
+          height={this.props.height}
           destination={this.state.destination}
           destinationIndex={this.state.destinationIndex}
           onClickBack={this.onClickBack.bind(this)}
@@ -103,6 +104,7 @@ class BarContainer extends React.Component {
         />
         : <div>
           <Bar
+            height={this.props.height}
             destinations={this.state.destinations}
             onClickDestination={this.onClickDestination.bind(this)}
             onClickAddDestination={this.onClickAddDestination.bind(this)}
@@ -117,7 +119,8 @@ class BarContainer extends React.Component {
 }
 
 BarContainer.propTypes = {
-  onEnteringTripView: PropTypes.func
+  onEnteringTripView: PropTypes.func,
+  height: PropTypes.any
 }
 
 export default BarContainer

@@ -6,7 +6,6 @@ export const destStyle = {
   float: 'left',
   display: 'inline-block',
   paddingLeft: '10px',
-  height: '180px',
   width: '140px',
   borderWidth: '5px',
   borderStyle: 'solid',
@@ -24,10 +23,10 @@ AddButton.propTypes = {
   onClickAddDestination: PropTypes.func
 }
 
-const Bar = ({ destinations, onClickDestination, onClickAddDestination }) =>
-  <div style={{ height: '200px', width: '100%' }}>
+const Bar = ({ destinations, onClickDestination, onClickAddDestination, height }) =>
+  <div style={{ height, width: '100%' }}>
     {destinations.map((dest, destIndex) =>
-      <div key={`${dest.name}-${destIndex}`} style={destStyle} onClick={() => onClickDestination(dest, destIndex)}>
+      <div key={`${dest.name}-${destIndex}`} style={{ ...destStyle, height: height - 20 }} onClick={() => onClickDestination(dest, destIndex)}>
         <h1>{dest.name}</h1>
         <h2>{dest.duration}</h2>
       </div>)}
@@ -37,7 +36,8 @@ const Bar = ({ destinations, onClickDestination, onClickAddDestination }) =>
 Bar.propTypes = {
   destinations: PropTypes.any,
   onClickDestination: PropTypes.func.isRequired,
-  onClickAddDestination: PropTypes.func.isRequired
+  onClickAddDestination: PropTypes.func.isRequired,
+  height: PropTypes.any
 }
 
 export default Bar

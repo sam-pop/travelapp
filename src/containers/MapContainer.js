@@ -31,16 +31,13 @@ class MapContainer extends React.Component {
   }
 
   componentDidMount () {
-    getClient().then(db => db.collection('trips').find(
-      { _id: ObjectId('5bb8a294bc0c7b396d6b8abb') },
-      { limit: 1 }
-    ).asArray()).then(
-      trip => { console.log(trip); return trip[0].destinations.map(dest => dest.place_id) }).then(
-      placeIds => Promise.all(placeIds.map(convertPlaceIdToLongLat))).then(
-      places => {
-        this.setState({ places })
-      }
-    )
+    getClient()
+      .then(db => db.collection('trips').find(
+        { _id: ObjectId('5bb8a294bc0c7b396d6b8abb') },
+        { limit: 1 }).asArray())
+      .then(trip => trip[0].destinations.map(dest => dest.place_id))
+      .then(placeIds => Promise.all(placeIds.map(convertPlaceIdToLongLat)))
+      .then(places => this.setState({ places }))
   }
 
   componentWillReceiveProps (nextProps) {
@@ -60,15 +57,19 @@ class MapContainer extends React.Component {
   render () {
     return (
       <div>
-        <Map places={this.state.places}
-          center={this.state.center} />
+        <Map
+          places={this.state.places}
+          center={this.state.center}
+          height={this.props.height}
+        />
       </div>
     )
   }
 }
 
 MapContainer.propTypes = {
-  zoomToPlaceId: PropTypes.string
+  zoomToPlaceId: PropTypes.string,
+  height: PropTypes.any
 }
 
 export default MapContainer
