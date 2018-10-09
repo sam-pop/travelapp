@@ -93,6 +93,11 @@ class BarContainer extends React.Component {
       })
     }
   }
+  onClickDeleteDestination (destToDelete) {
+    this.setState({
+      destinations: this.state.destinations.filter(dest => dest.place_id !== destToDelete.place_id)
+    })
+  }
   render () {
     return (
       this.state.destination
@@ -108,6 +113,7 @@ class BarContainer extends React.Component {
             height={this.props.height}
             destinations={this.state.destinations}
             onClickDestination={this.onClickDestination.bind(this)}
+            onClickDeleteDestination={this.onClickDeleteDestination.bind(this)}
             tripInfo={this.state.tripInfo}
             onTitleChange={value => this.setState({ tripInfo: { ...this.state.tripInfo, name: value } })}
           />
