@@ -19,19 +19,7 @@ class TripViewContainer extends React.Component {
   }
   onDestinationSelection (newPlace) {
     this.setState({ modalDialogOpen: false })
-    if (newPlace) {
-      this.setState({
-        destinations: [
-          ...this.state.destinations,
-          {
-            name: newPlace.address_components[0].long_name,
-            duration: '1 day',
-            place_id: newPlace.place_id,
-            days: []
-          }
-        ]
-      })
-    }
+    this.props.onAddDestination(newPlace)
   }
   render () {
     return (
@@ -72,7 +60,8 @@ TripViewContainer.propTypes = {
   onClickDestination: PropTypes.func.isRequired,
   onTitleChange: PropTypes.func.isRequired,
   height: PropTypes.any,
-  tripInfo: PropTypes.object
+  tripInfo: PropTypes.object,
+  onAddDestination: PropTypes.func.isRequired
 }
 
 export default TripViewContainer

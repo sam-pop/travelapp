@@ -93,6 +93,21 @@ class BarContainer extends React.Component {
       })
     }
   }
+  onAddDestination (newPlace) {
+    if (newPlace) {
+      this.setState({
+        destinations: [
+          ...this.state.destinations,
+          {
+            name: newPlace.address_components[0].long_name,
+            duration: '1 day',
+            place_id: newPlace.place_id,
+            days: []
+          }
+        ]
+      })
+    }
+  }
   render () {
     return (
       this.state.destination
@@ -110,6 +125,7 @@ class BarContainer extends React.Component {
             onClickDestination={this.onClickDestination.bind(this)}
             tripInfo={this.state.tripInfo}
             onTitleChange={value => this.setState({ tripInfo: { ...this.state.tripInfo, name: value } })}
+            onAddDestination={this.onAddDestination.bind(this)}
           />
         </div>
     )
