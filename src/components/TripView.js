@@ -1,41 +1,41 @@
-import React from "react";
-import PropTypes from "prop-types";
-import Button from "./Button";
-import EditableText from "../containers/EditableText";
+import React from 'react'
+import PropTypes from 'prop-types'
+import Button from './Button'
+import EditableText from '../containers/EditableText'
 
 export const destStyle = {
-  float: "left",
-  display: "inline-block",
-  paddingLeft: "10px",
-  width: "140px",
-  borderWidth: "5px",
-  borderStyle: "solid",
-  margin: "4px",
+  float: 'left',
+  display: 'inline-block',
+  paddingLeft: '10px',
+  width: '140px',
+  borderWidth: '5px',
+  borderStyle: 'solid',
+  margin: '4px',
   padding: 0,
-  textAlign: "center"
-};
+  textAlign: 'center'
+}
 
 const AddButton = ({ onClickAddDestination }) => (
   <div
     style={{
-      width: "140px",
-      float: "left",
-      display: "inline-block",
-      paddingTop: "70px"
+      width: '140px',
+      float: 'left',
+      display: 'inline-block',
+      paddingTop: '70px'
     }}
   >
     <Button onClick={onClickAddDestination} />
   </div>
-);
+)
 
 AddButton.propTypes = {
   onClickAddDestination: PropTypes.func
-};
+}
 
 const formatDate = tripInfo =>
-  `${tripInfo.tripStartDate.format("MMM Do")} - ${tripInfo.tripEndDate.format(
-    "MMM Do"
-  )}`;
+  `${tripInfo.tripStartDate.format('MMM Do')} - ${tripInfo.tripEndDate.format(
+    'MMM Do'
+  )}`
 
 const TripView = ({
   destinations,
@@ -44,22 +44,22 @@ const TripView = ({
   height,
   tripInfo,
   onTitleChange
-}) => { 
+}) => {
   return (
-    <div style={{ height, width: "100%" }}>
+    <div style={{ height, width: '100%' }}>
       <div
         style={{
           height: 40,
-          textAlign: "left",
-          paddingLeft: "30px",
-          paddingTop: "10px"
+          textAlign: 'left',
+          paddingLeft: '30px',
+          paddingTop: '10px'
         }}
       >
         <EditableText
           value={tripInfo.name}
           onChange={value => onTitleChange(value)}
         />
-        <h3 style={{ margin: 0, display: "inline" }}>
+        <h3 style={{ margin: 0, display: 'inline' }}>
           {`, ${tripInfo.numberOfDays} Days, ${formatDate(tripInfo)}`}
         </h3>
       </div>
@@ -77,8 +77,8 @@ const TripView = ({
         <AddButton onClickAddDestination={onClickAddDestination} />
       </div>
     </div>
-  );
-};
+  )
+}
 
 TripView.propTypes = {
   destinations: PropTypes.any,
@@ -87,6 +87,6 @@ TripView.propTypes = {
   onClickAddDestination: PropTypes.func.isRequired,
   height: PropTypes.any,
   tripInfo: PropTypes.object
-};
+}
 
-export default TripView;
+export default TripView
