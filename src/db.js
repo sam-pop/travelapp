@@ -24,4 +24,12 @@ getClient().then(db =>
   console.error(err)
 })
 
-export { getClient, ObjectId }
+const getTrip = async (tripId = '5bb8a294bc0c7b396d6b8abb') => {
+  let trips = await getClient().then(
+    db => db.collection('trips').find(
+      { _id: ObjectId(tripId) },
+      { limit: 1 }).asArray())
+  return trips[0]
+}
+
+export { getClient, getTrip, ObjectId }

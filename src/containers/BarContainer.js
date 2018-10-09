@@ -58,12 +58,24 @@ const fakeNewDay = {
 class BarContainer extends React.Component {
   constructor (props) {
     super(props)
+    console.log(props)
     this.state = {
       destination: null,
-      destinations: fakeData.destinations,
-      tripInfo: fakeTripInfo
+      destinations: [],
+      trip: null
     }
+    this.getTrip = props.getTrip.bind(this)
+    console.log({ 'state': this.state })
   }
+
+  componentDidMount () {
+    this.getTrip().then(
+      trip => {
+        this.setState({ trip })
+      }
+    )
+  }
+
   onClickDestination (destination, destinationIndex) {
     this.props.onEnteringTripView(destination.place_id)
     this.setState({ destination, destinationIndex })
@@ -108,7 +120,7 @@ class BarContainer extends React.Component {
             height={this.props.height}
             destinations={this.state.destinations}
             onClickDestination={this.onClickDestination.bind(this)}
-            tripInfo={this.state.tripInfo}
+            tripInfo={this.state.trip}
             onTitleChange={value => this.setState({ tripInfo: { ...this.state.tripInfo, name: value } })}
           />
         </div>
@@ -117,6 +129,7 @@ class BarContainer extends React.Component {
 }
 
 BarContainer.propTypes = {
+  trip: PropTypes.object,
   onEnteringTripView: PropTypes.func,
   height: PropTypes.any
 }

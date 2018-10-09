@@ -24,14 +24,19 @@ AddButton.propTypes = {
   onClickAddDestination: PropTypes.func
 }
 
-const formatDate = tripInfo =>
-  `${tripInfo.tripStartDate.format('MMM Do')} - ${tripInfo.tripEndDate.format('MMM Do')}`
+const formatDate = tripInfo => {
+  if (tripInfo.tripStartDate && tripInfo.tripEndDate) {
+    return `${tripInfo.tripStartDate.format('MMM Do')} - ${tripInfo.tripEndDate.format('MMM Do')}`
+  } else {
+    return 'chickens!'
+  }
+}
 
 const TripView = ({ destinations, onClickDestination, onClickAddDestination, height, tripInfo, onTitleChange }) =>
   <div style={{ height, width: '100%' }}>
     <div style={{ height: 40, textAlign: 'left', paddingLeft: '30px', paddingTop: '10px' }}>
       <EditableText
-        value={tripInfo.name}
+        value={tripInfo ? tripInfo.name : 'dummy'}
         onChange={value => onTitleChange(value)}
       />
       <h3 style={{ margin: 0, display: 'inline' }}>

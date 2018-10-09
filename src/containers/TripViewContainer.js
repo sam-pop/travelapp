@@ -8,6 +8,7 @@ ReactModal.setAppElement(document.getElementById('root'))
 
 class TripViewContainer extends React.Component {
   constructor (props) {
+    console.log({ 'TripViewContainer props': props })
     super(props)
     this.state = {
       modalDialogOpen: false
