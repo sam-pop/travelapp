@@ -12,3 +12,16 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+.ReactModal__Content {
+  height: 400px;
+  width: 700px;
+  position: relative !important;
+}
+
+.ReactModal__Overlay {
+  background-color: rgba(0, 0, 0, 0.81) !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

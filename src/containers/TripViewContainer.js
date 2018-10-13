@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import TripView from "../components/TripView";
-import AddDestinationDialogBox from "../components/AddDestinationDialogBox";
+import AddDestinationDialogBox from "../components/AddDestinationDialogBox/index";
 import ReactModal from "react-modal";
 
 ReactModal.setAppElement(document.getElementById("root"));
@@ -62,7 +62,6 @@ TripViewContainer.propTypes = {
   destinations: PropTypes.any,
   onClickDestination: PropTypes.func.isRequired,
   onTitleChange: PropTypes.func.isRequired,
-  onClickDeleteDestination: PropTypes.func.isRequired,
   height: PropTypes.any,
   tripInfo: PropTypes.object
 };
