@@ -123,6 +123,9 @@ class BarContainer extends React.Component {
             height={this.props.height}
             destinations={this.state.destinations}
             onClickDestination={this.onClickDestination.bind(this)}
+            onClickDeleteDestination={() => {
+              console.log('TODO')
+            }}
             tripInfo={this.state.tripInfo}
             onTitleChange={value => this.setState({ tripInfo: { ...this.state.tripInfo, name: value } })}
             onAddDestination={this.onAddDestination.bind(this)}
