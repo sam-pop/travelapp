@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import './App.css'
 import BarContainer from './containers/BarContainer'
 import MapContainer from './containers/MapContainer'
+import 'material-components-web/dist/material-components-web.min.css'
 
 const barContainerHeight = 200 // height in pixels
 
