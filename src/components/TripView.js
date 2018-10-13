@@ -2,12 +2,49 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Button from './Button'
 import EditableText from '../containers/EditableText'
+import { IconButton } from '@rmwc/icon-button'
+import '@material/icon-button/dist/mdc.icon-button.css'
+
+const DestinationCard = ({ dest, height, onClick, onClickDeleteDestination }) =>
+  <div style={{ ...destStyle, height, position: 'relative' }} onClick={onClick}>
+    <p style={{ marginTop: '5px', marginBottom: '1px', marginLeft: '10px', textAlign: 'left', fontSize: 'small' }}>
+      {dest.name}
+    </p>
+    <div style={{
+      position: 'absolute',
+      left: '80px',
+      top: '-10px'
+    }}>
+      <IconButton icon='delete' onClick={event => {
+        // Prevent parent from handling the onClick
+        event.stopPropagation()
+        onClickDeleteDestination(dest)
+      }} />
+    </div>
+
+    <hr style={{
+      display: 'block',
+      height: '1px',
+      border: 0,
+      borderTop: '1px solid #ccc',
+      margin: '10px 1px',
+      padding: 0
+    }} />
+    <h2>{dest.duration}</h2>
+  </div>
+
+DestinationCard.propTypes = {
+  dest: PropTypes.object.isRequired,
+  height: PropTypes.any,
+  onClick: PropTypes.func.isRequired,
+  onClickDeleteDestination: PropTypes.func.isRequired
+}
 
 export const destStyle = {
   float: 'left',
   display: 'inline-block',
   paddingLeft: '10px',
-  width: '140px',
+  width: '120px',
   borderWidth: '5px',
   borderStyle: 'solid',
   margin: '4px',
@@ -85,6 +122,7 @@ TripView.propTypes = {
   onTitleChange: PropTypes.func.isRequired,
   onClickDestination: PropTypes.func.isRequired,
   onClickAddDestination: PropTypes.func.isRequired,
+  onClickDeleteDestination: PropTypes.func.isRequired,
   height: PropTypes.any,
   tripInfo: PropTypes.object
 }

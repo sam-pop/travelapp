@@ -27,6 +27,7 @@ class TripViewContainer extends React.Component {
         <TripView
           {...this.props}
           onClickAddDestination={this.onClickAddDestination.bind(this)}
+          onClickDeleteDestination={this.props.onClickDeleteDestination}
           onTitleChange={this.props.onTitleChange}
         />
         <ReactModal isOpen={this.state.modalDialogOpen}>
