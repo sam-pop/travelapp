@@ -1,22 +1,22 @@
-import React, { Component } from 'react'
-import './App.css'
-import BarContainer from './containers/BarContainer'
-import MapContainer from './containers/MapContainer'
-import 'material-components-web/dist/material-components-web.min.css'
+import React, { Component } from "react";
+import "./App.css";
+import BarContainer from "./containers/BarContainer";
+import MapContainer from "./containers/MapContainer";
+import "material-components-web/dist/material-components-web.min.css";
 
-const barContainerHeight = 200 // height in pixels
+const barContainerHeight = 200; // height in pixels
 
 class App extends Component {
-  constructor (props) {
-    super(props)
+  constructor(props) {
+    super(props);
     this.state = {
       zoomToPlaceId: null
-    }
+    };
   }
-  zoomToPlaceId (placeId) {
-    this.setState({ zoomToPlaceId: placeId })
+  zoomToPlaceId(placeId) {
+    this.setState({ zoomToPlaceId: placeId });
   }
-  render () {
+  render() {
     return (
       <div className="App">
         <BarContainer
@@ -28,8 +28,8 @@ class App extends Component {
           height={window.innerHeight - barContainerHeight}
         />
       </div>
-    )
+    );
   }
 }
 
-export default App
+export default App;

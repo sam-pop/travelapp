@@ -1,38 +1,38 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import TripView from '../components/TripView'
-import AddDestinationDialogBox from '../components/AddDestinationDialogBox'
-import ReactModal from 'react-modal'
+import React from "react";
+import PropTypes from "prop-types";
+import TripView from "../components/TripView";
+import AddDestinationDialogBox from "../components/AddDestinationDialogBox";
+import ReactModal from "react-modal";
 
-ReactModal.setAppElement(document.getElementById('root'))
+ReactModal.setAppElement(document.getElementById("root"));
 
 class TripViewContainer extends React.Component {
-  constructor (props) {
-    super(props)
+  constructor(props) {
+    super(props);
     this.state = {
       modalDialogOpen: false
-    }
+    };
   }
-  onClickAddDestination () {
-    this.setState({ modalDialogOpen: true })
+  onClickAddDestination() {
+    this.setState({ modalDialogOpen: true });
   }
-  onDestinationSelection (newPlace) {
-    this.setState({ modalDialogOpen: false })
+  onDestinationSelection(newPlace) {
+    this.setState({ modalDialogOpen: false });
     if (newPlace) {
       this.setState({
         destinations: [
           ...this.state.destinations,
           {
             name: newPlace.address_components[0].long_name,
-            duration: '1 day',
+            duration: "1 day",
             place_id: newPlace.place_id,
             days: []
           }
         ]
-      })
+      });
     }
   }
-  render () {
+  render() {
     return (
       <div>
         <TripView
@@ -41,12 +41,20 @@ class TripViewContainer extends React.Component {
           onClickDeleteDestination={this.props.onClickDeleteDestination}
           onTitleChange={this.props.onTitleChange}
         />
-        <ReactModal isOpen={this.state.modalDialogOpen} >
-          <h1 onClick={() => { this.setState({ modalDialogOpen: false }) }}>X</h1>
-          <AddDestinationDialogBox onAdd={this.onDestinationSelection.bind(this)} />
+        <ReactModal isOpen={this.state.modalDialogOpen}>
+          <h1
+            onClick={() => {
+              this.setState({ modalDialogOpen: false });
+            }}
+          >
+            X
+          </h1>
+          <AddDestinationDialogBox
+            onAdd={this.onDestinationSelection.bind(this)}
+          />
         </ReactModal>
       </div>
-    )
+    );
   }
 }
 
@@ -57,6 +65,6 @@ TripViewContainer.propTypes = {
   onClickDeleteDestination: PropTypes.func.isRequired,
   height: PropTypes.any,
   tripInfo: PropTypes.object
-}
+};
 
-export default TripViewContainer
+export default TripViewContainer;
