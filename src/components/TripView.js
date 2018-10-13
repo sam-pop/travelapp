@@ -52,41 +52,70 @@ export const destStyle = {
   textAlign: 'center'
 }
 
-const AddButton = ({ onClickAddDestination }) =>
-  <div style={{ width: '140px', float: 'left', display: 'inline-block', paddingTop: '70px' }}>
+const AddButton = ({ onClickAddDestination }) => (
+  <div
+    style={{
+      width: '140px',
+      float: 'left',
+      display: 'inline-block',
+      paddingTop: '70px'
+    }}
+  >
     <Button onClick={onClickAddDestination} />
   </div>
+)
 
 AddButton.propTypes = {
   onClickAddDestination: PropTypes.func
 }
 
 const formatDate = tripInfo =>
-  `${tripInfo.tripStartDate.format('MMM Do')} - ${tripInfo.tripEndDate.format('MMM Do')}`
+  `${tripInfo.tripStartDate.format('MMM Do')} - ${tripInfo.tripEndDate.format(
+    'MMM Do'
+  )}`
 
-const TripView = ({ destinations, onClickDestination, onClickAddDestination, height, tripInfo, onTitleChange, onClickDeleteDestination }) =>
-  <div style={{ height, width: '100%' }}>
-    <div style={{ height: 40, textAlign: 'left', paddingLeft: '30px', paddingTop: '10px' }}>
-      <EditableText
-        value={tripInfo.name}
-        onChange={value => onTitleChange(value)}
-      />
-      <h3 style={{ margin: 0, display: 'inline' }}>
-        {`, ${tripInfo.numberOfDays} Days, ${formatDate(tripInfo)}`}
-      </h3>
+const TripView = ({
+  destinations,
+  onClickDestination,
+  onClickAddDestination,
+  height,
+  tripInfo,
+  onTitleChange
+}) => {
+  return (
+    <div style={{ height, width: '100%' }}>
+      <div
+        style={{
+          height: 40,
+          textAlign: 'left',
+          paddingLeft: '30px',
+          paddingTop: '10px'
+        }}
+      >
+        <EditableText
+          value={tripInfo.name}
+          onChange={value => onTitleChange(value)}
+        />
+        <h3 style={{ margin: 0, display: 'inline' }}>
+          {`, ${tripInfo.numberOfDays} Days, ${formatDate(tripInfo)}`}
+        </h3>
+      </div>
+      <div>
+        {destinations.map((dest, destIndex) => (
+          <div
+            key={`${dest.name}-${destIndex}`}
+            style={{ ...destStyle, height: height - 70 }}
+            onClick={() => onClickDestination(dest, destIndex)}
+          >
+            <h1>{dest.name}</h1>
+            <h2>{dest.duration}</h2>
+          </div>
+        ))}
+        <AddButton onClickAddDestination={onClickAddDestination} />
+      </div>
     </div>
-    <div>
-      {destinations.map((dest, destIndex) =>
-        <DestinationCard
-          key={`${dest.name}-${destIndex}`}
-          dest={dest}
-          height={height - 70}
-          onClick={() => onClickDestination(dest, destIndex)}
-          onClickDeleteDestination={onClickDeleteDestination}
-        />)}
-      <AddButton onClickAddDestination={onClickAddDestination} />
-    </div>
-  </div>
+  )
+}
 
 TripView.propTypes = {
   destinations: PropTypes.any,
