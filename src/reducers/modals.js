@@ -6,11 +6,11 @@ const defaultState = {
 
 export default (state = defaultState, action) => {
   switch (action.type) {
-  case SHOW_ADD_DESTINATION_MODAL:
-    return Object.assign({}, state, {
-      showAddDestinationModal: action.show,
-    })
-  default:
-    return state
+    case SHOW_ADD_DESTINATION_MODAL:
+      return Object.assign({}, state, {
+        showAddDestinationModal: action.show,
+      })
+    default:
+      return state
   }
 }
