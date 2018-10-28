@@ -4,7 +4,7 @@ import { LocationSearchInput } from './LocationSearchInput'
 
 const AddDestinationDialogBox = ({ onAdd }) =>
   <div>
-    <div style={{ width: '300px', margin: 0, float: 'left' }}>
+    <div >
       <LocationSearchInput onSelect={onAdd} />
     </div>
   </div>

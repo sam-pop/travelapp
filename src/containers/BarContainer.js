@@ -93,6 +93,21 @@ class BarContainer extends React.Component {
       })
     }
   }
+  onAddDestination (newPlace) {
+    if (newPlace) {
+      this.setState({
+        destinations: [
+          ...this.state.destinations,
+          {
+            name: newPlace.address_components[0].long_name,
+            duration: '1 day',
+            place_id: newPlace.place_id,
+            days: []
+          }
+        ]
+      })
+    }
+  }
   render () {
     return (
       this.state.destination
@@ -108,9 +123,13 @@ class BarContainer extends React.Component {
             height={this.props.height}
             destinations={this.state.destinations}
             onClickDestination={this.onClickDestination.bind(this)}
+            onClickDeleteDestination={() => {
+              console.log('TODO')
+            }}
             tripInfo={this.state.tripInfo}
             onTitleChange={value => this.setState({ tripInfo: { ...this.state.tripInfo, name: value } })}
             onDateChange={value => this.setState({ tripInfo: { ...this.state.tripInfo, ...value } })}
+            onAddDestination={this.onAddDestination.bind(this)}
           />
         </div>
     )
