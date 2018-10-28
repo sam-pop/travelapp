@@ -120,7 +120,9 @@ class BarContainer extends React.Component {
               tripInfo: { ...this.state.tripInfo, name: value },
             })
           }
-          onDateChange={value => this.setState({ tripInfo: { ...this.state.tripInfo, ...value } })}
+          onDateChange={value =>
+            this.setState({ tripInfo: { ...this.state.tripInfo, ...value } })
+          }
           addDestination={newPlace => {
             if (newPlace) {
               this.setState({
@@ -134,7 +136,8 @@ class BarContainer extends React.Component {
                   },
                 ],
               })
-          }}}
+            }
+          }}
         />
       </div>
     )

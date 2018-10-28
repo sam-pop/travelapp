@@ -7,41 +7,42 @@ const titleDateFormat = 'MMM Do'
 const inputValueDateFormat = 'YYYY-MM-DD'
 
 class EditableDate extends React.Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.state = {
       value: props.value || moment(),
-      editingMode: false
+      editingMode: false,
     }
   }
-  onClick () {
+  onClick() {
     this.setState({ editingMode: true })
   }
-  onChange (event) {
+  onChange(event) {
     this.setState({ value: moment(event.target.value) })
   }
-  onDone () {
+  onDone() {
     this.props.onChange(this.state.value)
   }
-  onClickOutside () {
+  onClickOutside() {
     this.setState({ editingMode: false }, () => {
       this.onDone()
     })
   }
-  render () {
+  render() {
     return (
       <span onClick={this.onClick.bind(this)}>
         <OutsideAlerter onClickOutside={this.onClickOutside.bind(this)}>
-          {this.state.editingMode
-            ? <input type='date'
+          {this.state.editingMode ? (
+            <input
+              type="date"
               value={this.state.value.format(inputValueDateFormat)}
               onChange={this.onChange.bind(this)}
-            >
-            </input>
-            : <h3 style={{ display: 'inline' }}>
+            />
+          ) : (
+            <h3 style={{ display: 'inline' }}>
               {this.state.value.format(titleDateFormat)}
             </h3>
-          }
+          )}
         </OutsideAlerter>
       </span>
     )
@@ -50,7 +51,7 @@ class EditableDate extends React.Component {
 
 EditableDate.propTypes = {
   value: PropTypes.any,
-  onChange: PropTypes.func
+  onChange: PropTypes.func,
 }
 
 export default EditableDate

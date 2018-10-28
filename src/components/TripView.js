@@ -91,13 +91,14 @@ AddButton.propTypes = {
   onClickAddDestination: PropTypes.func,
 }
 
-const InlineString = ({ value }) =>
+const InlineString = ({ value }) => (
   <div style={{ display: 'inline' }}>
     <h3 style={{ margin: 0, display: 'inline' }}>{value}</h3>
   </div>
+)
 
 InlineString.propTypes = {
-  value: PropTypes.string.isRequired
+  value: PropTypes.string.isRequired,
 }
 
 const TripView = ({
@@ -109,7 +110,7 @@ const TripView = ({
   onTitleChange,
   onDateChange,
   onClickDeleteDestination,
-}) =>
+}) => (
   <div style={{ height, width: '100%' }}>
     <div
       style={{
@@ -123,15 +124,24 @@ const TripView = ({
         value={tripInfo.name}
         onChange={value => onTitleChange(value)}
       />
-      <InlineString value={`, ${tripInfo.tripEndDate.diff(tripInfo.tripStartDate, 'days')} Days, `} />
-      <EditableDate value={tripInfo.tripStartDate}
-        onChange={date => onDateChange({ tripStartDate: date })} />
-      <InlineString value=' - ' />
-      <EditableDate value={tripInfo.tripEndDate}
-        onChange={date => onDateChange({ tripEndDate: date })} />
+      <InlineString
+        value={`, ${tripInfo.tripEndDate.diff(
+          tripInfo.tripStartDate,
+          'days'
+        )} Days, `}
+      />
+      <EditableDate
+        value={tripInfo.tripStartDate}
+        onChange={date => onDateChange({ tripStartDate: date })}
+      />
+      <InlineString value=" - " />
+      <EditableDate
+        value={tripInfo.tripEndDate}
+        onChange={date => onDateChange({ tripEndDate: date })}
+      />
     </div>
     <div>
-      {destinations.map((dest, destIndex) =>
+      {destinations.map((dest, destIndex) => (
         <DestinationCard
           key={`${dest.name}-${destIndex}`}
           dest={dest}
@@ -139,10 +149,11 @@ const TripView = ({
           onClick={() => onClickDestination(dest, destIndex)}
           onClickDeleteDestination={onClickDeleteDestination}
         />
-      )}
+      ))}
       <AddButton onClickAddDestination={onClickAddDestination} />
     </div>
   </div>
+)
 
 TripView.propTypes = {
   destinations: PropTypes.any,
