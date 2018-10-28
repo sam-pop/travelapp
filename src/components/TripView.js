@@ -6,39 +6,60 @@ import EditableDate from '../containers/EditableDate'
 import { IconButton } from '@rmwc/icon-button'
 import '@material/icon-button/dist/mdc.icon-button.css'
 
-const DestinationCard = ({ dest, height, onClick, onClickDeleteDestination }) =>
+const DestinationCard = ({
+  dest,
+  height,
+  onClick,
+  onClickDeleteDestination,
+}) => (
   <div style={{ ...destStyle, height, position: 'relative' }} onClick={onClick}>
-    <p style={{ marginTop: '5px', marginBottom: '1px', marginLeft: '10px', textAlign: 'left', fontSize: 'small' }}>
+    <p
+      style={{
+        marginTop: '5px',
+        marginBottom: '1px',
+        marginLeft: '10px',
+        textAlign: 'left',
+        fontSize: 'small',
+      }}
+    >
       {dest.name}
     </p>
-    <div style={{
-      position: 'absolute',
-      left: '80px',
-      top: '-10px'
-    }}>
-      <IconButton icon='delete' onClick={event => {
-        // Prevent parent from handling the onClick
-        event.stopPropagation()
-        onClickDeleteDestination(dest)
-      }} />
+    <div
+      style={{
+        position: 'absolute',
+        left: '80px',
+        top: '-10px',
+      }}
+    >
+      <IconButton
+        icon="delete"
+        onClick={event => {
+          // Prevent parent from handling the onClick
+          event.stopPropagation()
+          onClickDeleteDestination(dest)
+        }}
+      />
     </div>
 
-    <hr style={{
-      display: 'block',
-      height: '1px',
-      border: 0,
-      borderTop: '1px solid #ccc',
-      margin: '10px 1px',
-      padding: 0
-    }} />
+    <hr
+      style={{
+        display: 'block',
+        height: '1px',
+        border: 0,
+        borderTop: '1px solid #ccc',
+        margin: '10px 1px',
+        padding: 0,
+      }}
+    />
     <h2>{dest.duration}</h2>
   </div>
+)
 
 DestinationCard.propTypes = {
   dest: PropTypes.object.isRequired,
   height: PropTypes.any,
   onClick: PropTypes.func.isRequired,
-  onClickDeleteDestination: PropTypes.func.isRequired
+  onClickDeleteDestination: PropTypes.func.isRequired,
 }
 
 export const destStyle = {
@@ -50,7 +71,7 @@ export const destStyle = {
   borderStyle: 'solid',
   margin: '4px',
   padding: 0,
-  textAlign: 'center'
+  textAlign: 'center',
 }
 
 const AddButton = ({ onClickAddDestination }) => (
@@ -59,7 +80,7 @@ const AddButton = ({ onClickAddDestination }) => (
       width: '140px',
       float: 'left',
       display: 'inline-block',
-      paddingTop: '70px'
+      paddingTop: '70px',
     }}
   >
     <Button onClick={onClickAddDestination} />
@@ -67,7 +88,7 @@ const AddButton = ({ onClickAddDestination }) => (
 )
 
 AddButton.propTypes = {
-  onClickAddDestination: PropTypes.func
+  onClickAddDestination: PropTypes.func,
 }
 
 const InlineString = ({ value }) =>
@@ -86,10 +107,18 @@ const TripView = ({
   height,
   tripInfo,
   onTitleChange,
-  onDateChange
+  onDateChange,
+  onClickDeleteDestination,
 }) =>
   <div style={{ height, width: '100%' }}>
-    <div style={{ height: 40, textAlign: 'left', paddingLeft: '30px', paddingTop: '10px' }}>
+    <div
+      style={{
+        height: 40,
+        textAlign: 'left',
+        paddingLeft: '30px',
+        paddingTop: '10px',
+      }}
+    >
       <EditableText
         value={tripInfo.name}
         onChange={value => onTitleChange(value)}
@@ -103,14 +132,13 @@ const TripView = ({
     </div>
     <div>
       {destinations.map((dest, destIndex) =>
-        <div
+        <DestinationCard
           key={`${dest.name}-${destIndex}`}
-          style={{ ...destStyle, height: height - 70 }}
+          dest={dest}
+          height={height - 70}
           onClick={() => onClickDestination(dest, destIndex)}
-        >
-          <h1>{dest.name}</h1>
-          <h2>{dest.duration}</h2>
-        </div>
+          onClickDeleteDestination={onClickDeleteDestination}
+        />
       )}
       <AddButton onClickAddDestination={onClickAddDestination} />
     </div>
@@ -124,7 +152,7 @@ TripView.propTypes = {
   onClickAddDestination: PropTypes.func.isRequired,
   onClickDeleteDestination: PropTypes.func.isRequired,
   height: PropTypes.any,
-  tripInfo: PropTypes.object
+  tripInfo: PropTypes.object,
 }
 
 export default TripView

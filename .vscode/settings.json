@@ -1,0 +1,4 @@
+{
+    "eslint.alwaysShowStatus": true,
+    "eslint.nodePath": "./node_modules/.bin/eslint"
+}
