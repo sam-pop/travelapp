@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux'
 import modals from './modals'
+import userData from './user-data'
 
-export default combineReducers({ modals })
+export default combineReducers({ userData, modals })
