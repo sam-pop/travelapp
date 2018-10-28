@@ -19,28 +19,21 @@ class TripViewContainer extends React.Component {
   onDestinationSelection(newPlace) {
     const { destinations } = this.props
     this.setState({ modalDialogOpen: false })
-    if (newPlace) {
-      this.setState({
-        destinations: [
-          ...destinations,
-          {
-            name: newPlace.address_components[0].long_name,
-            duration: '1 day',
-            place_id: newPlace.place_id,
-            days: [],
-          },
-        ],
-      })
-    }
+    this.props.addDestination(newPlace)
   }
   render() {
     return (
       <div>
         <TripView
           {...this.props}
-          onClickAddDestination={this.onClickAddDestination.bind(this)}
-          onClickDeleteDestination={this.props.onClickDeleteDestination}
+          onClickAddDestination={this.onClickAddDestination.bind(
+            this
+          )}
+          onClickDeleteDestination={
+            this.props.onClickDeleteDestination
+          }
           onTitleChange={this.props.onTitleChange}
+          onDateChange={this.props.onDateChange}
         />
         <ReactModal isOpen={this.state.modalDialogOpen}>
           <h1
@@ -48,7 +41,7 @@ class TripViewContainer extends React.Component {
               this.setState({ modalDialogOpen: false })
             }}
           >
-            X
+                        X
           </h1>
           <AddDestinationDialogBox
             onAdd={this.onDestinationSelection.bind(this)}
@@ -63,6 +56,7 @@ TripViewContainer.propTypes = {
   destinations: PropTypes.any,
   onClickDestination: PropTypes.func.isRequired,
   onTitleChange: PropTypes.func.isRequired,
+  onDateChange: PropTypes.func.isRequired,
   height: PropTypes.any,
   tripInfo: PropTypes.object,
 }

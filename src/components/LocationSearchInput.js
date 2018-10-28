@@ -50,13 +50,13 @@ class LocationSearchInput extends React.Component {
                 // inline style for demonstration purpose
                 const style = suggestion.active
                   ? {
-                      backgroundColor: '#fafafa',
-                      cursor: 'pointer',
-                    }
+                    backgroundColor: '#fafafa',
+                    cursor: 'pointer',
+                  }
                   : {
-                      backgroundColor: '#ffffff',
-                      cursor: 'pointer',
-                    }
+                    backgroundColor: '#ffffff',
+                    cursor: 'pointer',
+                  }
                 return (
                   <div
                     key={`suggestion-${index}`}

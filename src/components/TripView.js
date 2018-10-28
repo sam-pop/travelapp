@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Button from './Button'
 import EditableText from '../containers/EditableText'
+import EditableDate from '../containers/EditableDate'
 import { IconButton } from '@rmwc/icon-button'
 import '@material/icon-button/dist/mdc.icon-button.css'
 
@@ -90,10 +91,15 @@ AddButton.propTypes = {
   onClickAddDestination: PropTypes.func,
 }
 
-const formatDate = tripInfo =>
-  `${tripInfo.tripStartDate.format('MMM Do')} - ${tripInfo.tripEndDate.format(
-    'MMM Do'
-  )}`
+const InlineString = ({ value }) => (
+  <div style={{ display: 'inline' }}>
+    <h3 style={{ margin: 0, display: 'inline' }}>{value}</h3>
+  </div>
+)
+
+InlineString.propTypes = {
+  value: PropTypes.string.isRequired,
+}
 
 const TripView = ({
   destinations,
@@ -102,6 +108,7 @@ const TripView = ({
   height,
   tripInfo,
   onTitleChange,
+  onDateChange,
   onClickDeleteDestination,
 }) => (
   <div style={{ height, width: '100%' }}>
@@ -117,9 +124,21 @@ const TripView = ({
         value={tripInfo.name}
         onChange={value => onTitleChange(value)}
       />
-      <h3 style={{ margin: 0, display: 'inline' }}>
-        {`, ${tripInfo.numberOfDays} Days, ${formatDate(tripInfo)}`}
-      </h3>
+      <InlineString
+        value={`, ${tripInfo.tripEndDate.diff(
+          tripInfo.tripStartDate,
+          'days'
+        )} Days, `}
+      />
+      <EditableDate
+        value={tripInfo.tripStartDate}
+        onChange={date => onDateChange({ tripStartDate: date })}
+      />
+      <InlineString value=" - " />
+      <EditableDate
+        value={tripInfo.tripEndDate}
+        onChange={date => onDateChange({ tripEndDate: date })}
+      />
     </div>
     <div>
       {destinations.map((dest, destIndex) => (
@@ -139,6 +158,7 @@ const TripView = ({
 TripView.propTypes = {
   destinations: PropTypes.any,
   onTitleChange: PropTypes.func.isRequired,
+  onDateChange: PropTypes.func.isRequired,
   onClickDestination: PropTypes.func.isRequired,
   onClickAddDestination: PropTypes.func.isRequired,
   onClickDeleteDestination: PropTypes.func.isRequired,
