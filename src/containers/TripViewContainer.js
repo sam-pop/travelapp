@@ -17,11 +17,12 @@ class TripViewContainer extends React.Component {
     this.setState({ modalDialogOpen: true })
   }
   onDestinationSelection(newPlace) {
+    const { destinations } = this.props
     this.setState({ modalDialogOpen: false })
     if (newPlace) {
       this.setState({
         destinations: [
-          ...this.state.destinations,
+          ...destinations,
           {
             name: newPlace.address_components[0].long_name,
             duration: '1 day',
