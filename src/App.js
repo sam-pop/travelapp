@@ -7,16 +7,16 @@ import 'material-components-web/dist/material-components-web.min.css'
 const barContainerHeight = 200 // height in pixels
 
 class App extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.state = {
-      zoomToPlaceId: null
+      zoomToPlaceId: null,
     }
   }
-  zoomToPlaceId (placeId) {
+  zoomToPlaceId(placeId) {
     this.setState({ zoomToPlaceId: placeId })
   }
-  render () {
+  render() {
     return (
       <div className="App">
         <BarContainer

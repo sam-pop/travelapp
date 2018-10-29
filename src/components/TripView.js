@@ -2,42 +2,64 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Button from './Button'
 import EditableText from '../containers/EditableText'
+import EditableDate from '../containers/EditableDate'
 import { IconButton } from '@rmwc/icon-button'
 import '@material/icon-button/dist/mdc.icon-button.css'
 
-const DestinationCard = ({ dest, height, onClick, onClickDeleteDestination }) =>
+const DestinationCard = ({
+  dest,
+  height,
+  onClick,
+  onClickDeleteDestination,
+}) => (
   <div style={{ ...destStyle, height, position: 'relative' }} onClick={onClick}>
-    <p style={{ marginTop: '5px', marginBottom: '1px', marginLeft: '10px', textAlign: 'left', fontSize: 'small' }}>
+    <p
+      style={{
+        marginTop: '5px',
+        marginBottom: '1px',
+        marginLeft: '10px',
+        textAlign: 'left',
+        fontSize: 'small',
+      }}
+    >
       {dest.name}
     </p>
-    <div style={{
-      position: 'absolute',
-      left: '80px',
-      top: '-10px'
-    }}>
-      <IconButton icon='delete' onClick={event => {
-        // Prevent parent from handling the onClick
-        event.stopPropagation()
-        onClickDeleteDestination(dest)
-      }} />
+    <div
+      style={{
+        position: 'absolute',
+        left: '80px',
+        top: '-10px',
+      }}
+    >
+      <IconButton
+        icon="delete"
+        onClick={event => {
+          // Prevent parent from handling the onClick
+          event.stopPropagation()
+          onClickDeleteDestination(dest)
+        }}
+      />
     </div>
 
-    <hr style={{
-      display: 'block',
-      height: '1px',
-      border: 0,
-      borderTop: '1px solid #ccc',
-      margin: '10px 1px',
-      padding: 0
-    }} />
+    <hr
+      style={{
+        display: 'block',
+        height: '1px',
+        border: 0,
+        borderTop: '1px solid #ccc',
+        margin: '10px 1px',
+        padding: 0,
+      }}
+    />
     <h2>{dest.duration}</h2>
   </div>
+)
 
 DestinationCard.propTypes = {
   dest: PropTypes.object.isRequired,
   height: PropTypes.any,
   onClick: PropTypes.func.isRequired,
-  onClickDeleteDestination: PropTypes.func.isRequired
+  onClickDeleteDestination: PropTypes.func.isRequired,
 }
 
 export const destStyle = {
@@ -49,7 +71,7 @@ export const destStyle = {
   borderStyle: 'solid',
   margin: '4px',
   padding: 0,
-  textAlign: 'center'
+  textAlign: 'center',
 }
 
 const AddButton = ({ onClickAddDestination }) => (
@@ -58,7 +80,7 @@ const AddButton = ({ onClickAddDestination }) => (
       width: '140px',
       float: 'left',
       display: 'inline-block',
-      paddingTop: '70px'
+      paddingTop: '70px',
     }}
   >
     <Button onClick={onClickAddDestination} />
@@ -66,13 +88,18 @@ const AddButton = ({ onClickAddDestination }) => (
 )
 
 AddButton.propTypes = {
-  onClickAddDestination: PropTypes.func
+  onClickAddDestination: PropTypes.func,
 }
 
-const formatDate = tripInfo =>
-  `${tripInfo.tripStartDate.format('MMM Do')} - ${tripInfo.tripEndDate.format(
-    'MMM Do'
-  )}`
+const InlineString = ({ value }) => (
+  <div style={{ display: 'inline' }}>
+    <h3 style={{ margin: 0, display: 'inline' }}>{value}</h3>
+  </div>
+)
+
+InlineString.propTypes = {
+  value: PropTypes.string.isRequired,
+}
 
 const TripView = ({
   destinations,
@@ -80,51 +107,63 @@ const TripView = ({
   onClickAddDestination,
   height,
   tripInfo,
-  onTitleChange
-}) => {
-  return (
-    <div style={{ height, width: '100%' }}>
-      <div
-        style={{
-          height: 40,
-          textAlign: 'left',
-          paddingLeft: '30px',
-          paddingTop: '10px'
-        }}
-      >
-        <EditableText
-          value={tripInfo.name}
-          onChange={value => onTitleChange(value)}
-        />
-        <h3 style={{ margin: 0, display: 'inline' }}>
-          {`, ${tripInfo.numberOfDays} Days, ${formatDate(tripInfo)}`}
-        </h3>
-      </div>
-      <div>
-        {destinations.map((dest, destIndex) => (
-          <div
-            key={`${dest.name}-${destIndex}`}
-            style={{ ...destStyle, height: height - 70 }}
-            onClick={() => onClickDestination(dest, destIndex)}
-          >
-            <h1>{dest.name}</h1>
-            <h2>{dest.duration}</h2>
-          </div>
-        ))}
-        <AddButton onClickAddDestination={onClickAddDestination} />
-      </div>
+  onTitleChange,
+  onDateChange,
+  onClickDeleteDestination,
+}) => (
+  <div style={{ height, width: '100%' }}>
+    <div
+      style={{
+        height: 40,
+        textAlign: 'left',
+        paddingLeft: '30px',
+        paddingTop: '10px',
+      }}
+    >
+      <EditableText
+        value={tripInfo.name}
+        onChange={value => onTitleChange(value)}
+      />
+      <InlineString
+        value={`, ${tripInfo.tripEndDate.diff(
+          tripInfo.tripStartDate,
+          'days'
+        )} Days, `}
+      />
+      <EditableDate
+        value={tripInfo.tripStartDate}
+        onChange={date => onDateChange({ tripStartDate: date })}
+      />
+      <InlineString value=" - " />
+      <EditableDate
+        value={tripInfo.tripEndDate}
+        onChange={date => onDateChange({ tripEndDate: date })}
+      />
     </div>
-  )
-}
+    <div>
+      {destinations.map((dest, destIndex) => (
+        <DestinationCard
+          key={`${dest.name}-${destIndex}`}
+          dest={dest}
+          height={height - 70}
+          onClick={() => onClickDestination(dest, destIndex)}
+          onClickDeleteDestination={onClickDeleteDestination}
+        />
+      ))}
+      <AddButton onClickAddDestination={onClickAddDestination} />
+    </div>
+  </div>
+)
 
 TripView.propTypes = {
   destinations: PropTypes.any,
   onTitleChange: PropTypes.func.isRequired,
+  onDateChange: PropTypes.func.isRequired,
   onClickDestination: PropTypes.func.isRequired,
   onClickAddDestination: PropTypes.func.isRequired,
   onClickDeleteDestination: PropTypes.func.isRequired,
   height: PropTypes.any,
-  tripInfo: PropTypes.object
+  tripInfo: PropTypes.object,
 }
 
 export default TripView

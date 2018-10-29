@@ -1,22 +1,20 @@
 import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
-import PlacesAutocomplete, {
-  geocodeByAddress
-} from 'react-places-autocomplete'
+import PlacesAutocomplete, { geocodeByAddress } from 'react-places-autocomplete'
 
 import './style.css'
 
 class LocationSearchInput extends React.Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.state = { address: '', placeInfo: null }
   }
 
-  handleChange (address) {
+  handleChange(address) {
     this.setState({ address })
   }
 
-  handleSelect (address) {
+  handleSelect(address) {
     geocodeByAddress(address)
       .then(results => {
         if (results.length === 1) {
@@ -26,7 +24,7 @@ class LocationSearchInput extends React.Component {
       .catch(error => console.error('Error', error))
   }
 
-  render () {
+  render() {
     return (
       <div style={{ width: 500, margin: '0 auto' }}>
         <PlacesAutocomplete
@@ -38,7 +36,7 @@ class LocationSearchInput extends React.Component {
             getInputProps,
             suggestions,
             getSuggestionItemProps,
-            loading
+            loading,
           }) => (
             <Fragment>
               <h2>
@@ -48,7 +46,7 @@ class LocationSearchInput extends React.Component {
               <input
                 {...getInputProps({
                   placeholder: 'Search Places...',
-                  className: 'location-search-input'
+                  className: 'location-search-input',
                 })}
               />
               <div className="autocomplete-dropdown-container">
@@ -66,7 +64,7 @@ class LocationSearchInput extends React.Component {
                       key={`suggestion-${index}`}
                       {...getSuggestionItemProps(suggestion, {
                         className,
-                        style
+                        style,
                       })}
                     >
                       <strong>{suggestion.formattedSuggestion.mainText}</strong>{' '}
@@ -94,7 +92,7 @@ class LocationSearchInput extends React.Component {
 }
 
 LocationSearchInput.propTypes = {
-  onSelect: PropTypes.func.isRequired
+  onSelect: PropTypes.func.isRequired,
 }
 
 export { LocationSearchInput }

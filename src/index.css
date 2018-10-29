@@ -13,15 +13,11 @@ code {
     monospace;
 }
 
-.ReactModal__Content{
-
+.ReactModal__Content {
   height: 400px;
   width: 700px;
   position: relative !important;
-
 }
-
-
 
 .ReactModal__Overlay {
   background-color: rgba(0, 0, 0, 0.81) !important;

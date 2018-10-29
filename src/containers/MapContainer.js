@@ -7,54 +7,57 @@ const google = window.google
 // needed for mysterious Google reasons
 const fakeElement = document.createElement('div')
 
-const convertPlaceIdToLongLat = (placeId) => new Promise((resolve, reject) => {
-  const service = new google.maps.places.PlacesService(fakeElement)
-  service.getDetails({ placeId }, (place, status) => {
-    if (status === google.maps.places.PlacesServiceStatus.OK) {
-      resolve(place)
-    }
+const convertPlaceIdToLongLat = placeId =>
+  new Promise((resolve, reject) => {
+    const service = new google.maps.places.PlacesService(fakeElement)
+    service.getDetails({ placeId }, (place, status) => {
+      if (status === google.maps.places.PlacesServiceStatus.OK) {
+        resolve(place)
+      }
+    })
   })
-})
 
 const somewhereAroundCapetown = {
   lat: -33.55,
-  lng: 18.25
+  lng: 18.25,
 }
 
 class MapContainer extends React.Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.state = {
       places: [],
-      center: somewhereAroundCapetown
+      center: somewhereAroundCapetown,
     }
   }
 
-  componentDidMount () {
+  componentDidMount() {
     getClient()
-      .then(db => db.collection('trips').find(
-        { _id: ObjectId('5bb8a294bc0c7b396d6b8abb') },
-        { limit: 1 }).asArray())
+      .then(db =>
+        db
+          .collection('trips')
+          .find({ _id: ObjectId('5bb8a294bc0c7b396d6b8abb') }, { limit: 1 })
+          .asArray()
+      )
       .then(trip => trip[0].destinations.map(dest => dest.place_id))
       .then(placeIds => Promise.all(placeIds.map(convertPlaceIdToLongLat)))
       .then(places => this.setState({ places }))
   }
 
-  componentWillReceiveProps (nextProps) {
+  componentWillReceiveProps(nextProps) {
     if (nextProps.zoomToPlaceId) {
-      convertPlaceIdToLongLat(nextProps.zoomToPlaceId)
-        .then(place => {
-          this.setState({
-            center: {
-              lat: place.geometry.location.lat(),
-              lng: place.geometry.location.lng()
-            }
-          })
+      convertPlaceIdToLongLat(nextProps.zoomToPlaceId).then(place => {
+        this.setState({
+          center: {
+            lat: place.geometry.location.lat(),
+            lng: place.geometry.location.lng(),
+          },
         })
+      })
     }
   }
 
-  render () {
+  render() {
     return (
       <div>
         <Map
@@ -69,7 +72,7 @@ class MapContainer extends React.Component {
 
 MapContainer.propTypes = {
   zoomToPlaceId: PropTypes.string,
-  height: PropTypes.any
+  height: PropTypes.any,
 }
 
 export default MapContainer
