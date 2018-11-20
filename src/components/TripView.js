@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import Button from './Button'
 import EditableText from '../containers/EditableText'
 import EditableDate from '../containers/EditableDate'
+import moment from 'moment'
 import { IconButton } from '@rmwc/icon-button'
 import '@material/icon-button/dist/mdc.icon-button.css'
 
@@ -51,7 +52,11 @@ const DestinationCard = ({
         padding: 0,
       }}
     />
-    <h2>{dest.duration}</h2>
+    <h2>
+      {moment
+        .duration(moment(dest.end_date).diff(moment(dest.start_date)))
+        .asDays() + ' days'}
+    </h2>
   </div>
 )
 
@@ -102,7 +107,6 @@ InlineString.propTypes = {
 }
 
 const TripView = ({
-  destinations,
   onClickDestination,
   onClickAddDestination,
   height,
@@ -112,46 +116,50 @@ const TripView = ({
   onClickDeleteDestination,
 }) => (
   <div style={{ height, width: '100%' }}>
-    <div
-      style={{
-        height: 40,
-        textAlign: 'left',
-        paddingLeft: '30px',
-        paddingTop: '10px',
-      }}
-    >
-      <EditableText
-        value={tripInfo.name}
-        onChange={value => onTitleChange(value)}
-      />
-      <InlineString
-        value={`, ${tripInfo.tripEndDate.diff(
-          tripInfo.tripStartDate,
-          'days'
-        )} Days, `}
-      />
-      <EditableDate
-        value={tripInfo.tripStartDate}
-        onChange={date => onDateChange({ tripStartDate: date })}
-      />
-      <InlineString value=" - " />
-      <EditableDate
-        value={tripInfo.tripEndDate}
-        onChange={date => onDateChange({ tripEndDate: date })}
-      />
-    </div>
-    <div>
-      {destinations.map((dest, destIndex) => (
-        <DestinationCard
-          key={`${dest.name}-${destIndex}`}
-          dest={dest}
-          height={height - 70}
-          onClick={() => onClickDestination(dest, destIndex)}
-          onClickDeleteDestination={onClickDeleteDestination}
-        />
-      ))}
-      <AddButton onClickAddDestination={onClickAddDestination} />
-    </div>
+    {tripInfo && (
+      <div>
+        <div
+          style={{
+            height: 40,
+            textAlign: 'left',
+            paddingLeft: '30px',
+            paddingTop: '10px',
+          }}
+        >
+          <EditableText
+            value={tripInfo.name}
+            onChange={value => onTitleChange(value)}
+          />
+          <InlineString
+            value={`, ${moment(tripInfo.end_date).diff(
+              moment(tripInfo.start_date),
+              'days'
+            )} Days, `}
+          />
+          <EditableDate
+            value={moment(tripInfo.start_date)}
+            onChange={date => onDateChange({ tripStartDate: date })}
+          />
+          <InlineString value=" - " />
+          <EditableDate
+            value={moment(tripInfo.end_date)}
+            onChange={date => onDateChange({ tripEndDate: date })}
+          />
+        </div>
+        <div>
+          {tripInfo.destinations.map((dest, destIndex) => (
+            <DestinationCard
+              key={`${dest.name}-${destIndex}`}
+              dest={dest}
+              height={height - 70}
+              onClick={() => onClickDestination(dest, destIndex)}
+              onClickDeleteDestination={onClickDeleteDestination}
+            />
+          ))}
+          <AddButton onClickAddDestination={onClickAddDestination} />
+        </div>
+      </div>
+    )}
   </div>
 )
 

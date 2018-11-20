@@ -16,6 +16,11 @@ class EditableText extends React.Component {
   componentWillUnmount() {
     document.removeEventListener('mousedown', this.handleClickOutside)
   }
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      value: nextProps.value,
+    })
+  }
   onClick() {
     this.setState({ editingMode: true })
   }
