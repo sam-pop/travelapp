@@ -6,6 +6,7 @@ import EditableDate from '../containers/EditableDate'
 import moment from 'moment'
 import { IconButton } from '@rmwc/icon-button'
 import '@material/icon-button/dist/mdc.icon-button.css'
+import { Droppable, Draggable } from 'react-beautiful-dnd'
 
 const DestinationCard = ({
   dest,
@@ -13,7 +14,14 @@ const DestinationCard = ({
   onClick,
   onClickDeleteDestination,
 }) => (
-  <div style={{ ...destStyle, height, position: 'relative' }} onClick={onClick}>
+  <div
+    style={{
+      ...destStyle,
+      height,
+      position: 'relative',
+    }}
+    onClick={onClick}
+  >
     <p
       style={{
         marginTop: '5px',
@@ -114,52 +122,89 @@ const TripView = ({
   onTitleChange,
   onDateChange,
   onClickDeleteDestination,
+  destinations,
 }) => (
   <div style={{ height, width: '100%' }}>
-    {tripInfo && (
-      <div>
-        <div
-          style={{
-            height: 40,
-            textAlign: 'left',
-            paddingLeft: '30px',
-            paddingTop: '10px',
-          }}
-        >
-          <EditableText
-            value={tripInfo.name}
-            onChange={value => onTitleChange(value)}
-          />
-          <InlineString
-            value={`, ${moment(tripInfo.end_date).diff(
-              moment(tripInfo.start_date),
-              'days'
-            )} Days, `}
-          />
-          <EditableDate
-            value={moment(tripInfo.start_date)}
-            onChange={date => onDateChange({ tripStartDate: date })}
-          />
-          <InlineString value=" - " />
-          <EditableDate
-            value={moment(tripInfo.end_date)}
-            onChange={date => onDateChange({ tripEndDate: date })}
-          />
-        </div>
-        <div>
-          {tripInfo.destinations.map((dest, destIndex) => (
-            <DestinationCard
-              key={`${dest.name}-${destIndex}`}
-              dest={dest}
-              height={height - 70}
-              onClick={() => onClickDestination(dest, destIndex)}
-              onClickDeleteDestination={onClickDeleteDestination}
-            />
-          ))}
-          <AddButton onClickAddDestination={onClickAddDestination} />
-        </div>
-      </div>
-    )}
+    <div
+      style={{
+        height: 40,
+        textAlign: 'left',
+        paddingLeft: '30px',
+        paddingTop: '10px',
+      }}
+    >
+      <EditableText
+        value={tripInfo.name}
+        onChange={value => onTitleChange(value)}
+      />
+      <InlineString
+        value={`, ${tripInfo.tripEndDate.diff(
+          tripInfo.tripStartDate,
+          'days'
+        )} Days, `}
+      />
+      <EditableDate
+        value={tripInfo.tripStartDate}
+        onChange={date => onDateChange({ tripStartDate: date })}
+      />
+      <InlineString value=" - " />
+      <EditableDate
+        value={tripInfo.tripEndDate}
+        onChange={date => onDateChange({ tripEndDate: date })}
+      />
+    </div>
+
+    <div>
+      <Droppable droppableId={'yuyuyu'} type="PERSON" direction="horizontal" >
+        {(provided, snapshot) => (
+          <div
+            ref={provided.innerRef}
+            style={{
+              ...destStyle,
+              height: 150,
+              width: 700,
+              position: 'relative',
+              backgroundColor: snapshot.isDraggingOver ? 'blue' : 'grey',
+              display: 'flex',
+              alignItems: 'start',
+            }}
+            {...provided.droppableProps}
+          >
+            {provided.placeholder}
+
+            {destinations.map((dest, destIndex) => {
+              return (
+                <Draggable
+                  key={dest.place_id}
+                  draggableId={dest.place_id}
+                  index={destIndex}
+                >
+                  {(dragProvided, dragSnapshot) => (
+                    <div
+                      ref={dragProvided.innerRef}
+                      key={`${dest.name}-${destIndex}`}
+                      {...dragProvided.draggableProps}
+                      {...dragProvided.dragHandleProps}
+                    >
+                      <DestinationCard
+                        dest={dest}
+                        height={height - 70}
+                        onClick={() => onClickDestination(dest, destIndex)}
+                        onClickDeleteDestination={onClickDeleteDestination}
+                      />
+                    </div>
+                  )}
+                </Draggable>
+              )
+            })}
+          </div>
+        )}
+      </Droppable>
+    </div>
+
+    <div>
+      <AddButton onClickAddDestination={onClickAddDestination} />
+    </div>
   </div>
 )
 
