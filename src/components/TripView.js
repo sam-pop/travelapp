@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import Button from './Button'
 import EditableText from '../containers/EditableText'
 import EditableDate from '../containers/EditableDate'
+import moment from 'moment'
 import { IconButton } from '@rmwc/icon-button'
 import '@material/icon-button/dist/mdc.icon-button.css'
 import { Droppable, Draggable } from 'react-beautiful-dnd'
@@ -59,7 +60,11 @@ const DestinationCard = ({
         padding: 0,
       }}
     />
-    <h2>{dest.duration}</h2>
+    <h2>
+      {moment
+        .duration(moment(dest.end_date).diff(moment(dest.start_date)))
+        .asDays() + ' days'}
+    </h2>
   </div>
 )
 
@@ -110,7 +115,6 @@ InlineString.propTypes = {
 }
 
 const TripView = ({
-  destinations,
   onClickDestination,
   onClickAddDestination,
   height,
@@ -118,6 +122,7 @@ const TripView = ({
   onTitleChange,
   onDateChange,
   onClickDeleteDestination,
+  destinations,
 }) => (
   <div style={{ height, width: '100%' }}>
     <div

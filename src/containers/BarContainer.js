@@ -1,25 +1,36 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import SingleDestinationBar from '../components/SingleDestinationBar'
-import moment from 'moment'
 import TripViewContainer from './TripViewContainer'
 import { connect } from 'react-redux'
+import moment from 'moment'
 
-const fakeTripInfo = {
-  name: 'Trip to China',
-  tripStartDate: moment(),
-  tripEndDate: moment().add(5, 'days'),
-  numberOfDays: 15,
-}
+import changecase from 'changecase-objects'
 
 class BarContainer extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
       destination: null,
-      // destinations: fakeData.destinations,
-      tripInfo: fakeTripInfo,
+      trip: null,
+      tripInfo: {
+        name: '',
+        tripEndDate: moment(),
+        tripStartDate: moment(),
+      },
     }
+    this.state.tripInfo.tripEndDate.diff = () => 1
+
+    this.getTrip = props.getTrip.bind(this)
+  }
+  componentDidMount() {
+    this.getTrip().then(triPinfo => {
+      const tripInfo = changecase.camelCase(triPinfo)
+      tripInfo.tripStartDate = moment(tripInfo.startDate)
+      tripInfo.tripEndDate = moment(tripInfo.endDate)
+
+      this.setState({ tripInfo })
+    })
   }
 
   onClickDestination(destination, destinationIndex) {
@@ -39,9 +50,10 @@ class BarContainer extends React.Component {
   }
 
   saveDestination(newPlace) {
+    // TODO: update backend
     this.setState({ modalDialogOpen: false })
     if (newPlace) {
-      // TOTO: Move to redux
+      // TODO: Move to redux
       // this.setState({
       //   destinations: [
       //     ...this.state.destinations,
@@ -57,7 +69,7 @@ class BarContainer extends React.Component {
   }
 
   onClickDeleteDestination(destToDelete) {
-    // TOTO: Move to redux
+    // TODO: Move to redux
     // this.setState({
     //   destinations: this.state.destinations.filter(
     //     dest => dest.place_id !== destToDelete.place_id
@@ -86,11 +98,13 @@ class BarContainer extends React.Component {
             this.setState({ tripInfo: { ...this.state.tripInfo, name: value } })
           }
           onDateChange={value =>
+            // TODO: update backend
             this.setState({ tripInfo: { ...this.state.tripInfo, ...value } })
           }
           addDestination={newPlace => {
+            // TODO: update backend
             if (newPlace) {
-              // TOTO: Move to redux
+              // TODO: Move to redux
               // this.setState({
               //   destinations: [
               //     ...this.state.destinations,
@@ -111,6 +125,7 @@ class BarContainer extends React.Component {
 }
 
 BarContainer.propTypes = {
+  getTrip: PropTypes.func,
   onEnteringTripView: PropTypes.func,
   height: PropTypes.any,
   destination: PropTypes.array,
