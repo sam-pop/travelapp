@@ -52,9 +52,9 @@ const defaultState = {
 
 export default (state = defaultState, action) => {
   switch (action.type) {
-    case SET_DESTINATIONS:
-      return Object.assign({}, { destinations: action.destinations })
-    default:
-      return state
+  case SET_DESTINATIONS:
+    return Object.assign({}, { destinations: action.destinations })
+  default:
+    return state
   }
 }

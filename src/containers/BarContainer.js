@@ -12,12 +12,6 @@ const fakeTripInfo = {
   numberOfDays: 15,
 }
 
-// const fakeData = {}
-
-const fakeNewDay = {
-  activities: [{ name: 'farting' }, { name: 'sunbathing' }],
-}
-
 class BarContainer extends React.Component {
   constructor(props) {
     super(props)
@@ -47,6 +41,7 @@ class BarContainer extends React.Component {
   saveDestination(newPlace) {
     this.setState({ modalDialogOpen: false })
     if (newPlace) {
+      // TOTO: Move to redux
       // this.setState({
       //   destinations: [
       //     ...this.state.destinations,
@@ -62,6 +57,7 @@ class BarContainer extends React.Component {
   }
 
   onClickDeleteDestination(destToDelete) {
+    // TOTO: Move to redux
     // this.setState({
     //   destinations: this.state.destinations.filter(
     //     dest => dest.place_id !== destToDelete.place_id
@@ -94,6 +90,7 @@ class BarContainer extends React.Component {
           }
           addDestination={newPlace => {
             if (newPlace) {
+              // TOTO: Move to redux
               // this.setState({
               //   destinations: [
               //     ...this.state.destinations,
@@ -117,6 +114,7 @@ BarContainer.propTypes = {
   onEnteringTripView: PropTypes.func,
   height: PropTypes.any,
   destination: PropTypes.array,
+  destinations: PropTypes.array,
 }
 
 const mapStateToProps = state => {

@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import './App.css'
 import BarContainer from './containers/BarContainer'
 import MapContainer from './containers/MapContainer'
@@ -20,21 +21,8 @@ class App extends Component {
     this.setState({ zoomToPlaceId: placeId })
   }
 
-  onBeforeDragStart = () => {
-    /*...*/
-  }
-
-  onDragStart = () => {
-    /*...*/
-  }
-  onDragUpdate = () => {
-    /*...*/
-  }
-  onDragEnd = (a, b, c) => {
+  onDragEnd(a, b, c) {
     const { destinations, setDestinations } = this.props
-    console.log('a', a)
-    console.log('b', b)
-    console.log('c', c)
 
     const fromIdx = a.source.index
     if (a.destination === null) {
@@ -42,7 +30,7 @@ class App extends Component {
       return
     }
     const toIdx = a.destination.index
-    
+
     const tmp = destinations[toIdx]
     destinations[toIdx] = destinations[fromIdx]
     destinations[fromIdx] = tmp
@@ -73,6 +61,10 @@ class App extends Component {
   }
 }
 
+App.propTypes = {
+  destinations: PropTypes.array,
+  setDestinations: PropTypes.func,
+}
 const mapStateToProps = state => {
   return {
     destinations: state.userData.destinations,
