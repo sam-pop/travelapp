@@ -1,52 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import SingleDestinationBar from '../components/SingleDestinationBar'
-import moment from 'moment'
 import TripViewContainer from './TripViewContainer'
-
-const fakeTripInfo = {
-  name: 'Trip to China',
-  tripStartDate: moment(),
-  tripEndDate: moment().add(5, 'days'),
-  numberOfDays: 15,
-}
-
-const fakeData = {
-  destinations: [
-    {
-      name: 'Paris',
-      place_id: 'ChIJD7fiBh9u5kcRYJSMaMOCCwQ',
-      duration: '3 days',
-      days: [
-        {
-          activities: [
-            { name: 'Frog watching' },
-            { name: 'Baguette shopping' },
-          ],
-        },
-      ],
-    },
-    {
-      name: 'Seattle',
-      place_id: 'ChIJVTPokywQkFQRmtVEaUZlJRA',
-      duration: '3 days',
-      days: [
-        {
-          activities: [
-            { name: 'Grunging out' },
-            { name: 'Driving to Vancouver' },
-          ],
-        },
-        {
-          activities: [
-            { name: 'Visiting Microsoft' },
-            { name: 'Watching the ocean' },
-          ],
-        },
-      ],
-    },
-  ],
-}
 
 const fakeNewDay = {
   activities: [{ name: 'farting' }, { name: 'sunbathing' }],
@@ -57,9 +12,14 @@ class BarContainer extends React.Component {
     super(props)
     this.state = {
       destination: null,
-      destinations: fakeData.destinations,
-      tripInfo: fakeTripInfo,
+      trip: null,
     }
+    this.getTrip = props.getTrip.bind(this)
+  }
+  componentDidMount() {
+    this.getTrip().then(tripInfo => {
+      this.setState({ tripInfo })
+    })
   }
   onClickDestination(destination, destinationIndex) {
     this.props.onEnteringTripView(destination.place_id)
@@ -70,23 +30,33 @@ class BarContainer extends React.Component {
     return 6
   }
   onClickAddDay(destinationIndex) {
-    const newDestinations = [...this.state.destinations]
+    // TODO: update backend
+    const newDestinations = [...this.state.tripInfo.destinations]
     newDestinations[destinationIndex].days.push(fakeNewDay)
-    this.setState({ destinations: newDestinations })
+    this.setState({
+      tripInfo: {
+        ...this.state.tripInfo,
+        destinations: newDestinations,
+      },
+    })
   }
   saveDestination(newPlace) {
+    // TODO: update backend
     this.setState({ modalDialogOpen: false })
     if (newPlace) {
       this.setState({
-        destinations: [
-          ...this.state.destinations,
-          {
-            name: newPlace.address_components[0].long_name,
-            duration: '1 day',
-            place_id: newPlace.place_id,
-            days: [],
-          },
-        ],
+        tripInfo: {
+          ...this.state.tripInfo,
+          destinations: [
+            ...this.state.tripInfo.destinations,
+            {
+              name: newPlace.address_components[0].long_name,
+              duration: '1 day',
+              place_id: newPlace.place_id,
+              days: [],
+            },
+          ],
+        },
       })
     }
   }
@@ -116,14 +86,17 @@ class BarContainer extends React.Component {
           onClickDeleteDestination={this.onClickDeleteDestination.bind(this)}
           tripInfo={this.state.tripInfo}
           onTitleChange={value =>
+            // TODO: update backend
             this.setState({
               tripInfo: { ...this.state.tripInfo, name: value },
             })
           }
           onDateChange={value =>
+            // TODO: update backend
             this.setState({ tripInfo: { ...this.state.tripInfo, ...value } })
           }
           addDestination={newPlace => {
+            // TODO: update backend
             if (newPlace) {
               this.setState({
                 destinations: [
@@ -145,6 +118,7 @@ class BarContainer extends React.Component {
 }
 
 BarContainer.propTypes = {
+  getTrip: PropTypes.func,
   onEnteringTripView: PropTypes.func,
   height: PropTypes.any,
 }
