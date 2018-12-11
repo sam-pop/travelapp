@@ -31,4 +31,16 @@ getClient()
     console.error(err)
   })
 
-export { getClient, ObjectId }
+const DUMMY_TRIP_ID = '5bb8a294bc0c7b396d6b8abb'
+
+const getTrip = (tripId = DUMMY_TRIP_ID) =>
+  getClient()
+    .then(db =>
+      db
+        .collection('trips')
+        .find({ _id: ObjectId(tripId) }, { limit: 1 })
+        .asArray()
+    )
+    .then(trips => trips[0])
+
+export { getClient, getTrip, ObjectId }

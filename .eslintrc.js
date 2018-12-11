@@ -1,10 +1,5 @@
 module.exports = {
-    extends: [
-        'standard',
-        'plugin:react/recommended',
-        'plugin:prettier/recommended',
-    ],
-    plugins: ['prettier'],
+    extends: ['standard', 'plugin:react/recommended'],
     env: {
         browser: true,
     },
@@ -14,7 +9,12 @@ module.exports = {
         },
     },
     rules: {
-        'prettier/prettier': 'warn',
+        'array-bracket-spacing': ['error', 'never'],
+        'no-unused-vars': ['warn'],
+        'comma-dangle': ['warn', 'only-multiline'],
+        semi: ['error', 'never'],
+        'space-before-function-paren': ['warn', 'never'],
         quotes: ['warn', 'single', { allowTemplateLiterals: true }],
+        indent: ['warn', 2],
     },
 }

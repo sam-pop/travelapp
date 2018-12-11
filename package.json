@@ -1,55 +1,66 @@
 {
-    "name": "traveler",
-    "version": "0.1.0",
-    "private": true,
-    "dependencies": {
-        "bson": "^3.0.2",
-        "eslint": "5.6.0",
-        "eslint-config-standard": "^12.0.0",
-        "eslint-plugin-import": "^2.14.0",
-        "eslint-plugin-node": "^7.0.1",
-        "eslint-plugin-promise": "^4.0.1",
-        "eslint-plugin-react": "^7.11.1",
-        "eslint-plugin-standard": "^4.0.0",
-        "google-map-react": "^1.0.9",
-        "moment": "^2.22.2",
-        "mongodb-stitch-browser-sdk": "^4.0.13",
-        "react": "^16.5.2",
-        "react-dom": "^16.5.2",
-        "react-modal": "^3.6.1",
-        "react-places-autocomplete": "^7.2.0",
-        "react-redux": "^5.1.0",
-        "react-scripts": "2.0.4",
-        "redux": "^4.0.1",
-        "rmwc": "^3.0.4",
-        "styled-components": "^3.4.9"
-    },
-    "scripts": {
-        "start": "react-scripts start",
-        "build": "react-scripts build",
-        "test": "react-scripts test",
-        "eject": "react-scripts eject",
-        "lint": "eslint ."
-    },
-    "eslintConfig": {
-        "extends": "react-app"
-    },
-    "browserslist": [
-        ">0.2%",
-        "not dead",
-        "not ie <= 11",
-        "not op_mini all"
-    ],
-    "devDependencies": {
-        "eslint-config-prettier": "^3.1.0",
-        "eslint-plugin-prettier": "^3.0.0",
-        "husky": "^1.1.2",
-        "prettier": "^1.14.3",
-        "pretty-quick": "^1.8.0"
-    },
-    "husky": {
-        "hooks": {
-            "pre-commit": "npm run lint"
-        }
+  "name": "traveler",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "bson": "^3.0.2",
+    "changecase-objects": "^1.1.0",
+    "eslint": "5.6.0",
+    "eslint-config-standard": "^12.0.0",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-node": "^7.0.1",
+    "eslint-plugin-promise": "^4.0.1",
+    "eslint-plugin-react": "^7.11.1",
+    "eslint-plugin-standard": "^4.0.0",
+    "google-map-react": "^1.0.9",
+    "moment": "^2.22.2",
+    "mongodb-stitch-browser-sdk": "^4.0.13",
+    "react": "^16.5.2",
+    "react-beautiful-dnd": "^10.0.1",
+    "react-dom": "^16.5.2",
+    "react-modal": "^3.6.1",
+    "react-places-autocomplete": "^7.2.0",
+    "react-redux": "^5.1.0",
+    "react-scripts": "2.0.4",
+    "redux": "^4.0.1",
+    "rmwc": "^3.0.4",
+    "styled-components": "^3.4.9"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "lint": "eslint .",
+    "storybook": "start-storybook -p 9009 -s public",
+    "build-storybook": "build-storybook -s public"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ],
+  "devDependencies": {
+    "@babel/core": "^7.1.6",
+    "@babel/plugin-syntax-json-strings": "^7.0.0",
+    "@storybook/addon-actions": "^4.0.9",
+    "@storybook/addon-links": "^4.0.9",
+    "@storybook/addons": "^4.0.9",
+    "@storybook/react": "^4.0.9",
+    "babel-loader": "^8.0.4",
+    "eslint-config-prettier": "^3.1.0",
+    "eslint-plugin-prettier": "^3.0.0",
+    "husky": "^1.1.2",
+    "prettier": "^1.14.3",
+    "pretty-quick": "^1.8.0"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint"
     }
+  }
 }
